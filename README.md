@@ -1,7 +1,5 @@
-# Projet_9_OpenClassrooms
-
 ## Projet 9 OpenClassrooms
-## PDéveloppez une application Web en utilisant Django
+## Développez une application Web en utilisant Django
 
 ###Description du projet :
 l'objectif est de commercialiser un produit permettant à une communauté d'utilisateurs de consulter ou de solliciter une critique de livres à la demande.
