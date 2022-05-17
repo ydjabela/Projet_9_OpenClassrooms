@@ -7,6 +7,7 @@ from listings.models import Band
 
 def hello(request):
     bands = Band.objects.all()
+
     return HttpResponse(f"""
         <h1>Hello Django !</h1>
         <p>Mes groupes préférés sont :<p>
@@ -15,4 +16,7 @@ def hello(request):
             <li>{bands[1].name}</li>
             <li>{bands[2].name}</li>
         </ul>
-""")
+    """)
+    '''
+    return render(request, 'listings/templates/listings/hello.html')
+    '''
