@@ -1,0 +1,28 @@
+{% extends 'litreview_app/base.html' %}
+
+{% block content %}
+
+
+<div class="wrapper">
+    <h1>Litreview Login </h1>
+    <section class="login-container">
+        <div>
+            <header>
+                <h2>Identification</h2>
+
+            </header>
+            <form method="post">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" >Se connecter</button>
+                </form>
+                <p>{{ message }}</p>
+            <form action="" method="post">
+                <h3 class="panel-title">Inscrivez-vous maintenant</h3>
+                <button type="submit">S'inscrire</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
