@@ -36,6 +36,7 @@ class Listing(models.Model):
         CLOTHING = 'C'
         POSTERS = 'P'
         MISC = 'M'
+
     title = models.fields.CharField(max_length=100)
     description = models.fields.CharField(max_length=100)
     sold = models.fields.BooleanField(default=False)
