@@ -1,0 +1,37 @@
+{% extends 'litreview_app/base.html' %}
+
+{% block content %}
+
+<div class="wrapper">
+    <h1>Litreview Login </h1>
+    <section class="login-container">
+        <div>
+            <header>
+                <h2>Identification</h2>
+            </header>
+
+            <form action="" method="post">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required="required"/>
+                <input type="password" name="password" placeholder="Mot de passe" required="required"/>
+                <input class="form-control" placeholder="Confirmer Mot de passe" name="password" type="password" value="" required="required">
+                <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
+
+            </form>
+            <form action="" method="post">
+                <button type="submit" class="btn btn-lg btn-success btn-block">Retourner</button>
+            </form>
+        </div>
+    </section>
+</div>
+<div class="inscreption_page">
+    <h3 class="panel-title">Inscrivez-vous maintenant</h3>
+    <div>
+        <input class="form-control" placeholder="Nom d'utilisateur" name="username" type="email" autofocus>
+        <input class="form-control" placeholder="Mot de passe" name="password" type="password" value="">
+        <input class="form-control" placeholder="Confirmer Mot de passe" name="password" type="password" value="">
+        <button type="submit" class="btn btn-lg btn-success btn-block">Retourner</button>
+        <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
+    </div>
+</div>
+
+{% endblock %}

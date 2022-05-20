@@ -36,6 +36,10 @@ class Listing(models.Model):
         CLOTHING = 'C'
         POSTERS = 'P'
         MISC = 'M'
+<<<<<<< HEAD
+=======
+
+>>>>>>> f1238ababf03334c407b7c69e3289b4871683132
     title = models.fields.CharField(max_length=100)
     description = models.fields.CharField(max_length=100)
     sold = models.fields.BooleanField(default=False)
