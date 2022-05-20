@@ -31,4 +31,16 @@ class Band(models.Model):
 
 
 class Listing(models.Model):
+    class ListingType(models.TextChoices):
+        RECORDS = 'R'
+        CLOTHING = 'C'
+        POSTERS = 'P'
+        MISC = 'M'
+    title = models.fields.CharField(max_length=100)
+    description = models.fields.CharField(max_length=100)
+    sold = models.fields.BooleanField(default=False)
+    year = models.fields.IntegerField(
+        validators=[MinValueValidator(1900), MaxValueValidator(2021)]
+    )
+    type = models.fields.CharField(choices=ListingType.choices, max_length=5)
     band = models.ForeignKey(Band, null=True, on_delete=models.SET_NULL)
