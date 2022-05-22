@@ -20,6 +20,6 @@ from litreview_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login),
-    path('inscreption/', views.inscreption),
-    path('feed/', views.home, name='home'),
+    path('inscreption/', views.inscreption, name='inscreption'),
+    path('home/', views.home, name='home'),
 ]
