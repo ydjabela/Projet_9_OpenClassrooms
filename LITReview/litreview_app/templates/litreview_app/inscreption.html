@@ -16,21 +16,12 @@
                 <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
 
             </form>
-            <form action="" method="post">
+            <form method="link" action="{% url 'login' %}">
                 <button type="submit" class="btn btn-lg btn-success btn-block">Retourner</button>
             </form>
         </div>
     </section>
 </div>
-<div class="inscreption_page">
-    <h3 class="panel-title">Inscrivez-vous maintenant</h3>
-    <div>
-        <input class="form-control" placeholder="Nom d'utilisateur" name="username" type="email" autofocus>
-        <input class="form-control" placeholder="Mot de passe" name="password" type="password" value="">
-        <input class="form-control" placeholder="Confirmer Mot de passe" name="password" type="password" value="">
-        <button type="submit" class="btn btn-lg btn-success btn-block">Retourner</button>
-        <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
-    </div>
-</div>
+
 
 {% endblock %}

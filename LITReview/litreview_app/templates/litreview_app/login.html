@@ -18,8 +18,8 @@
                 <p>{{ message }}</p>
 
             <h3 class="panel-title">Inscrivez-vous maintenant</h3>
-            <form action="" method="post">
-                <a href="{% url 'inscription' %}" >S'inscrire</a>
+            <form method="link" action="{% url 'inscription' %}">
+                <button type="submit" class="btn btn-lg btn-success btn-block" > Cliquez ici </button>
             </form>
         </div>
     </section>
