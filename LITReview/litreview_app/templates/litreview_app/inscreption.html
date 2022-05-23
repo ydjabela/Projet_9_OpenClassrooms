@@ -8,13 +8,15 @@
         <div>
             <header>
                 <h2>Identification</h2>
+                {% if form.errors %}
+                    {{ form.errors }}
+                {% endif %}
             </header>
 
             <form action="" method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
-
             </form>
             <form method="link" action="{% url 'login' %}">
                 <button type="submit" class="btn btn-lg btn-success btn-block">Retourner</button>
