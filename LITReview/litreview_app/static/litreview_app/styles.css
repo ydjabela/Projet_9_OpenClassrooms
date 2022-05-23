@@ -58,15 +58,11 @@ form input[type="password"],
 form input[type="text"],
 form button[type="submit"] {
     width: 100%;
-
     margin-bottom: 32px;
     padding: 16px;
-
     color: #333;
-
     border: 1px solid #ccc;
     border-radius: 5px;
-
     outline: 0;
 }
 
@@ -102,14 +98,7 @@ form button[type="submit"]:hover {
 
 
 
-
-
 /****************************************************/
-
-
-
-
-
 
 
 /* Styles de base pour la page Web
