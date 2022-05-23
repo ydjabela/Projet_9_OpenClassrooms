@@ -11,9 +11,8 @@
             </header>
 
             <form action="" method="post">
-                <input type="text" name="username" placeholder="Nom d'utilisateur" required="required"/>
-                <input type="password" name="password" placeholder="Mot de passe" required="required"/>
-                <input class="form-control" placeholder="Confirmer Mot de passe" name="password" type="password" value="" required="required">
+                {{ form.as_p }}
+                {% csrf_token %}
                 <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
 
             </form>
