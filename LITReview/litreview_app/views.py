@@ -22,7 +22,6 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 return redirect('home')
-                #message = f'Bonjour, {user.username}! Vous êtes connecté.'
             else:
                 message = 'Identifiants invalides.'
 
