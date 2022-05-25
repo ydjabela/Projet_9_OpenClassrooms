@@ -96,4 +96,51 @@ header li:hover li a:hover {
 }
 /*------------------------------------------------------------------------------------------------------------------- */
 
+
+
+.login-container {
+    display: flex;
+    width: 450px;
+    margin: auto;
+}
+
+form input[type="text"],
+form button[type="submit"] {
+    padding: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: 0;
+}
+
+/*
+    Au survol et au focus des champs de saisie de texte,
+    nous changeons la couleur d’arrière-plan.
+*/
+form input[type="text"]:focus,
+form input[type="text"]:hover{
+    background-color: #ccc;
+}
+
+/*
+    Mises-en forme du bouton pour l’envoi du formulaire.
+*/
+form button[type="submit"] {
+    font-weight: bold;
+    color: #eee;
+    text-transform: uppercase;
+
+    background-color: #e67e22;
+}
+
+/*
+    Mises-en forme du bouton pour l’envoi du formulaire au survol et au focus.
+*/
+form button[type="submit"]:focus,
+form button[type="submit"]:hover {
+    background-color: #d35400;
+}
+
+
+
 /*------------------------------------------------------------------------------------------------------------------- */
