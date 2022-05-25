@@ -1,9 +1,11 @@
 # blog/views.py
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 from django.db.models import CharField, Value
 from blog.models import Ticket, Review
+from . import forms
 
 
 @login_required
@@ -66,10 +68,18 @@ def add_critique(request):
 
 @login_required
 def add_tickets(request):
+    ticket_form = forms.AddTicketsForm
+    message = ''
+    if request.method == 'POST':
+        ticket_form = forms.AddTicketsForm(request.POST)
+        if ticket_form.is_valid():
+            tickets = authenticate(
+                title=ticket_form.cleaned_data['title'],
+            )
+            if tickets is not None:
+                # login(request, user)
+                return redirect('add_tickets')
+            else:
+                message = 'Identifiants invalides.'
 
-    tickets = Ticket.objects.all()
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
-    reviews = Review.objects.all()
-    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
-    return render(request, 'blog/add_tickets.html', context={'tickets': tickets, 'reviews': reviews})
+    return render(request, 'blog/add_tickets.html', context={'ticket_form': ticket_form})
