@@ -16,9 +16,9 @@
                     </div>
                 </div>
                 <ul id="menu">
-                    <li><a href=".">Flux</a></li>
-                    <li><a href="#">Posts</a></li>
-                    <li><a href="#">Abonnements</a></li>
+                    <li><a href="{% url 'home' %}">Flux</a></li>
+                    <li><a href="{% url 'post' %}">Posts</a></li>
+                    <li><a href="{% url 'abonnements' %}">Abonnements</a></li>
                     <li><a href="#">{{request.user}}</a>
                         <ul>
                             <li><a href="#">Mon profil</a></li>

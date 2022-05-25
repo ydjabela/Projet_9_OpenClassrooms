@@ -31,3 +31,25 @@ def home(request):
     reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
     return render(request, 'blog/home.html', context={'tickets': tickets, 'reviews': reviews})
 
+
+@login_required
+def post(request):
+
+    tickets = Ticket.objects.all()
+    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+    reviews = Review.objects.all()
+    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
+    return render(request, 'blog/post.html', context={'tickets': tickets, 'reviews': reviews})
+
+
+@login_required
+def abonnements(request):
+
+    tickets = Ticket.objects.all()
+    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+    reviews = Review.objects.all()
+    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
+    return render(request, 'blog/abonnements.html', context={'tickets': tickets, 'reviews': reviews})
+

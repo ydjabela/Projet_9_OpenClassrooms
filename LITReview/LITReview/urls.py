@@ -24,4 +24,6 @@ urlpatterns = [
     path('logout/', litreview_app.views.logout_user, name='logout'),
     path('inscription/', litreview_app.views.inscription, name='inscription'),
     path('home/', blog.views.home, name='home'),
+    path('post/', blog.views.post, name='post'),
+    path('abonnements/', blog.views.abonnements, name='abonnements'),
 ]
