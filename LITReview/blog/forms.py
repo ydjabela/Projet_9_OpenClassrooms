@@ -1,5 +1,5 @@
 from django import forms
-from blog.models import Ticket
+from blog.models import Ticket, Review
 from django.forms import ModelForm
 
 
@@ -19,21 +19,20 @@ class AddTicketsForm(ModelForm):
             ticket.save()
         return ticket
 
-'''
-class AddcCritiqueForm(ModelForm):
+
+class AddCritiqueForm(ModelForm):
     class Meta:
-        model = Ticket
+        model = Review
         fields = [
             "ticket",
-            "description",
-            "image"
+            "rating",
+            "headline",
+            "body"
             ]
 
     def save(self, user_id, commit=True,):
-        ticket = super(AddTicketsForm, self).save(commit=False)
-        ticket.user_id = user_id
+        review = super(AddCritiqueForm, self).save(commit=False)
+        review.user_id = user_id
         if commit:
-            ticket.save()
-        return ticket
-
-'''
+            review.save()
+        return review
