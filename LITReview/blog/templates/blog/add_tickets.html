@@ -1,21 +1,18 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 <div class="wrapper">
-    <h1>Ajouter  un ticket </h1>
     <section class="login-container">
         <div>
             <header>
-                <h2>Identification</h2>
-                {% if form.errors %}
-                    {{ form.errors }}
-                {% endif %}
+                <h2>Ajouter  un ticket</h2>
             </header>
 
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 {{ ticket_form.as_p }}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-lg btn-success btn-block">Ajouter  un Tickets</button>
             </form>
+            <p>{{ message }}</p>
         </div>
     </section>
 </div>

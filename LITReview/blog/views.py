@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 from django.db.models import CharField, Value
 from blog.models import Ticket, Review
-from . import forms
+from blog.forms import AddTicketsForm
 
 
 @login_required
@@ -68,18 +68,12 @@ def add_critique(request):
 
 @login_required
 def add_tickets(request):
-    ticket_form = forms.AddTicketsForm
-    message = ''
-    if request.method == 'POST':
-        ticket_form = forms.AddTicketsForm(request.POST)
+    if request.method == "POST":
+        ticket_form = AddTicketsForm(request.POST, request.FILES)
         if ticket_form.is_valid():
-            tickets = authenticate(
-                title=ticket_form.cleaned_data['title'],
-            )
-            if tickets is not None:
-                # login(request, user)
-                return redirect('add_tickets')
-            else:
-                message = 'Identifiants invalides.'
+            ticket_form.save(request.user.id)
+            return redirect("add_tickets")
+    else:
+        ticket_form = AddTicketsForm()
 
-    return render(request, 'blog/add_tickets.html', context={'ticket_form': ticket_form})
+    return render(request, "blog/add_tickets.html", context={"ticket_form": ticket_form})
