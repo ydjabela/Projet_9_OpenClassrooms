@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 from django.db.models import CharField, Value
 from blog.models import Ticket, Review
-from . import forms
+from blog.forms import AddTicketsForm, AddCritiqueForm
 
 
 @login_required
@@ -36,13 +36,18 @@ def home(request):
 
 @login_required
 def post(request):
+    if request.user.is_authenticated:
+        list_posts = []
+        list_posts = Review.objects.filter(user_id=request.user.id)
+        return render(
+            request,
+            template_name="blog/post.html",
+            context={
+                'reviews': list_posts,
+            })
+    else:
+        redirect("logout")
 
-    tickets = Ticket.objects.all()
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
-    reviews = Review.objects.all()
-    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
-    return render(request, 'blog/post.html', context={'tickets': tickets, 'reviews': reviews})
 
 
 @login_required
@@ -57,29 +62,24 @@ def abonnements(request):
 
 @login_required
 def add_critique(request):
-
-    tickets = Ticket.objects.all()
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
-    reviews = Review.objects.all()
-    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
-    return render(request, 'blog/add_critique.html', context={'tickets': tickets, 'reviews': reviews})
+    if request.method == "POST":
+        review_form = AddCritiqueForm(request.POST, request.FILES)
+        if review_form.is_valid():
+            review_form.save(request.user.id)
+            return redirect("add_critique")
+    else:
+        review_form = AddCritiqueForm()
+    return render(request, 'blog/add_critique.html', context={'review_form': review_form})
 
 
 @login_required
 def add_tickets(request):
-    ticket_form = forms.AddTicketsForm
-    message = ''
-    if request.method == 'POST':
-        ticket_form = forms.AddTicketsForm(request.POST)
+    if request.method == "POST":
+        ticket_form = AddTicketsForm(request.POST, request.FILES)
         if ticket_form.is_valid():
-            tickets = authenticate(
-                title=ticket_form.cleaned_data['title'],
-            )
-            if tickets is not None:
-                # login(request, user)
-                return redirect('add_tickets')
-            else:
-                message = 'Identifiants invalides.'
+            ticket_form.save(request.user.id)
+            return redirect("add_tickets")
+    else:
+        ticket_form = AddTicketsForm()
 
-    return render(request, 'blog/add_tickets.html', context={'ticket_form': ticket_form})
+    return render(request, "blog/add_tickets.html", context={"ticket_form": ticket_form})
