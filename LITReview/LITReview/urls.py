@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 import litreview_app.views
 import blog.views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,3 +31,5 @@ urlpatterns = [
     path('add_tickets/', blog.views.add_tickets, name='add_tickets'),
     path('add_critique/', blog.views.add_critique, name='add_critique'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

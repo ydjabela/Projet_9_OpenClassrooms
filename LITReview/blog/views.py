@@ -63,13 +63,16 @@ def abonnements(request):
 @login_required
 def add_critique(request):
     if request.method == "POST":
-        review_form = AddCritiqueForm(request.POST, request.FILES)
-        if review_form.is_valid():
+        ticket_form = AddTicketsForm(request.POST, request.FILES)
+        review_form = AddCritiqueForm(request.POST)
+        if review_form.is_valid() and ticket_form.is_valid:
             review_form.save(request.user.id)
             return redirect("add_critique")
     else:
         review_form = AddCritiqueForm()
-    return render(request, 'blog/add_critique.html', context={'review_form': review_form})
+        ticket_form = AddTicketsForm()
+    context = {'ticket_form': ticket_form, 'review_form': review_form}
+    return render(request, 'blog/add_critique.html', context=context)
 
 
 @login_required
