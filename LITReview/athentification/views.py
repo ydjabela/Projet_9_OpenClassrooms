@@ -40,8 +40,3 @@ def inscription(request):
             return redirect('login')
 
     return render(request, 'litreview_app/inscreption.html', context={'form': form})
-
-
-@login_required
-def home(request):
-    return render(request, 'litreview_app/home.html')

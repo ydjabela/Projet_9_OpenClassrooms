@@ -10,22 +10,6 @@ from blog.forms import AddTicketsForm, AddCritiqueForm
 
 @login_required
 def home(request):
-    """
-    reviews = get_users_viewable_reviews(request.user)
-    # returns queryset of reviews
-    reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
-
-    tickets = get_users_viewable_tickets(request.user)
-    # returns queryset of tickets
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
-    # combine and sort the two types of posts
-    posts = sorted(
-        chain(tickets),
-        key=lambda post: post.time_created,
-        reverse=True
-    )
-    """
     tickets = Ticket.objects.all()
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
 
@@ -36,29 +20,23 @@ def home(request):
 
 @login_required
 def post(request):
-    if request.user.is_authenticated:
-        list_posts = []
-        list_posts = Review.objects.filter(user_id=request.user.id)
-        return render(
-            request,
-            template_name="blog/post.html",
-            context={
-                'reviews': list_posts,
-            })
-    else:
-        redirect("logout")
-
+    list_posts = Review.objects.filter(user_id=request.user.id)
+    return render(
+        request,
+        template_name="blog/post.html",
+        context={
+            'reviews': list_posts,
+        })
 
 
 @login_required
 def abonnements(request):
-
     tickets = Ticket.objects.all()
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
     reviews = Review.objects.all()
     reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
     return render(request, 'blog/abonnements.html', context={'tickets': tickets, 'reviews': reviews})
+
 
 @login_required
 def add_critique(request):
