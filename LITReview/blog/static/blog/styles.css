@@ -103,6 +103,21 @@ header li:hover li a:hover {
     width: 450px;
     margin: auto;
 }
+section.login-container > div{
+    width: 450px;
+
+    margin: auto;
+
+    padding: 20px;
+
+    text-align: center;
+
+    background: #eee;
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+
+}
 
 form input[type="text"],
 form button[type="submit"] {

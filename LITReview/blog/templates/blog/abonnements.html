@@ -1,17 +1,31 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <p>abonnements</p>
-    {% for review in reviews %}
-        <p>Vous avez publié une critique    {{ review.time_created }}</p>
-        <p>étoiles : {{ review.rating }}</p>
-        <p> {{ review.body }}</p>
-        <p>{{ review.headline }}</p>
-        <ul>
-            <li>Ticket - {{ review.ticket.user }}
-                <p>{{ review.ticket.title }}</p>
-                <p>{{ review.ticket.description }}</p>
-                <img src={{ review.ticket.image }}>
-            </li>
-        </ul>
-    {% endfor %}
+<div class="wrapper">
+    <section class="login-container">
+        <div >
+            <header>
+                <h2 class="panel-title" >Suivre d'autres utilisateurs</h2>
+            </header>
+            <form method="post">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" >Envoyer</button>
+            </form>
+            <p>{{ message }}</p>
+
+            <h3 class="panel-title">Abonnements</h3>
+            <form method="link">
+                {% for userfllow in userfllows %}
+                    <p class="panel-title">{{ userfllow.followed_user }}</p>
+                {% endfor %}
+            </form>
+            <h3 class="panel-title">Abonnés</h3>
+            <form method="link">
+                {% for follower in followers %}
+                    <p class="panel-title">{{ follower.user }}</p>
+                {% endfor %}
+            </form>
+        </div>
+    </section>
+</div>
 {% endblock content %}

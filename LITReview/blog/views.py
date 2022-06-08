@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 from django.db.models import CharField, Value
-from blog.models import Ticket, Review
+from blog.models import Ticket, Review, UserFollows
 from blog.forms import AddTicketsForm, AddCritiqueForm
 
 
@@ -31,11 +31,24 @@ def post(request):
 
 @login_required
 def abonnements(request):
-    tickets = Ticket.objects.all()
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-    reviews = Review.objects.all()
-    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
-    return render(request, 'blog/abonnements.html', context={'tickets': tickets, 'reviews': reviews})
+    '''
+    followedUsers = UserFollows.objects.filter(user=request.user)
+    followedUserObj = []
+    for e in followedUsers:
+        id_user = e.followed_user_id
+        followedUserObj.append(User.objects.get(id=id_user).username)
+    context["followedUserObj"] = followedUserObj
+    followers = UserFollows.objects.filter(followed_user_id=request.user)
+    followersObj = []
+    for e in followers:
+        id_user = e.user_id
+        followersObj.append(User.objects.get(id=id_user).username)
+    context["followersObj"] = followersObj
+    '''
+    userfllows = UserFollows.objects.filter(user=request.user)
+    # userfllows = userfllows.annotate(content_type=Value('UserFollows', CharField()))
+    followers = UserFollows.objects.filter(followed_user_id=request.user)
+    return render(request, 'blog/abonnements.html', context={'userfllows': userfllows, "followers": followers})
 
 
 @login_required
