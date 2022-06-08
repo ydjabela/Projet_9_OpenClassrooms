@@ -3,28 +3,38 @@
 <div class="wrapper">
     <section class="login-container">
         <div >
-            <header>
-                <h2 class="panel-title" >Suivre d'autres utilisateurs</h2>
-            </header>
+            <h2 class="panel-title" >Suivre d'autres utilisateurs</h2>
             <form method="post">
-                    {{ form.as_p }}
-                    {% csrf_token %}
-                    <button type="submit" >Envoyer</button>
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input>
+                <button type="submit" >Envoyer</button>
             </form>
             <p>{{ message }}</p>
 
             <h3 class="panel-title">Abonnements</h3>
-            <form method="link">
+            <form method="post">
                 {% for userfllow in userfllows %}
-                    <p class="panel-title">{{ userfllow.followed_user }}</p>
+                    <table>
+                        <tr>
+                            <td>{{ userfllow.followed_user }}</td>
+                            <td><button type="submit" >Désabonner</button></td>
+                        </tr>
+                    </table>
+
                 {% endfor %}
             </form>
             <h3 class="panel-title">Abonnés</h3>
-            <form method="link">
+            <table>
                 {% for follower in followers %}
-                    <p class="panel-title">{{ follower.user }}</p>
+
+                        <tr>
+                            <td>{{ follower.user }}</td>
+                        </tr>
+
+
                 {% endfor %}
-            </form>
+            </table>
         </div>
     </section>
 </div>

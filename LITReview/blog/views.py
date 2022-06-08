@@ -46,7 +46,6 @@ def abonnements(request):
     context["followersObj"] = followersObj
     '''
     userfllows = UserFollows.objects.filter(user=request.user)
-    # userfllows = userfllows.annotate(content_type=Value('UserFollows', CharField()))
     followers = UserFollows.objects.filter(followed_user_id=request.user)
     return render(request, 'blog/abonnements.html', context={'userfllows': userfllows, "followers": followers})
 
