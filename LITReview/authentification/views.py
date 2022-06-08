@@ -26,7 +26,7 @@ def login_page(request):
                 message = 'Identifiants invalides.'
 
     return render(
-        request, 'litreview_app/login.html', context={'form': form, 'message': message})
+        request, 'authentification/login.html', context={'form': form, 'message': message})
 
 
 def inscription(request):
@@ -39,4 +39,4 @@ def inscription(request):
             login(request, user)
             return redirect('login')
 
-    return render(request, 'litreview_app/inscreption.html', context={'form': form})
+    return render(request, 'authentification/inscreption.html', context={'form': form})
