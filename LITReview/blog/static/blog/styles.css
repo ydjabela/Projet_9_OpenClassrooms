@@ -159,11 +159,20 @@ form button[type="submit"]:hover {
     display:flex;
 }
 
-table
-{
-    border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
+table, th, td {
+  border: solid 1px #000;
+  padding: 10px;
 }
-td
-{
-    border: 1px solid black;
+.userflowers_col {
+    width: 400px;
+    text-align: left;
+}
+.flowers_col {
+    width: 400px;
+    text-align: left
+}
+
+table {
+    border-collapse:collapse;
+    caption-side:bottom;
 }

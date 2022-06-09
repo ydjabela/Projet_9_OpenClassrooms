@@ -13,11 +13,12 @@
             <p>{{ message }}</p>
 
             <h3 class="panel-title">Abonnements</h3>
+            <h3 class="panel-title">-o-o-o-o-o-o</h3>
             <form method="post">
                 {% for userfllow in userfllows %}
                     <table>
                         <tr>
-                            <td>{{ userfllow.followed_user }}</td>
+                            <td class="userflowers_col">{{ userfllow.followed_user }}</td>
                             <td><button type="submit" >Désabonner</button></td>
                         </tr>
                     </table>
@@ -25,11 +26,13 @@
                 {% endfor %}
             </form>
             <h3 class="panel-title">Abonnés</h3>
+            <h3 class="panel-title">-o-o-o-o-o-o</h3>
+
             <table>
                 {% for follower in followers %}
 
                         <tr>
-                            <td>{{ follower.user }}</td>
+                            <td class="flowers_col">{{ follower.user }}</td>
                         </tr>
 
 

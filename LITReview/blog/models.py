@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 
 
+
 class Ticket(models.Model):
     title = models.fields.CharField(max_length=128)
     description = models.fields.CharField(max_length=2048)
