@@ -104,18 +104,8 @@ header li:hover li a:hover {
     margin: auto;
 }
 section.login-container > div{
-    width: 450px;
-
-    margin: auto;
-
-    padding: 20px;
 
     text-align: center;
-
-    background: #eee;
-    border: 1px solid #ccc;
-
-    border-radius: 5px;
 
 }
 
@@ -175,4 +165,13 @@ table, th, td {
 table {
     border-collapse:collapse;
     caption-side:bottom;
+}
+.form-title {
+  width: 75%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }

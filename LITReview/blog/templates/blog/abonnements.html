@@ -4,16 +4,17 @@
     <section class="login-container">
         <div >
             <h2 class="panel-title" >Suivre d'autres utilisateurs</h2>
-            <form method="post">
-                {{ form.as_p }}
-                {% csrf_token %}
-                <input>
-                <button type="submit" >Envoyer</button>
+            <form class="search_bar" method="POST">
+                {%csrf_token%}
+                {{form}}
+                <button class="default-button" type="submit" value="Suivre">Envoyer</button>
             </form>
-            <p>{{ message }}</p>
+            {%if error is not Null%}
+            <p class=error>{{error}}</p>
+            {%endif%}
 
             <h3 class="panel-title">Abonnements</h3>
-            <h3 class="panel-title">-o-o-o-o-o-o</h3>
+            <h3 class="panel-title">-o-o-o-o-o-o-</h3>
             <form method="post">
                 {% for userfllow in userfllows %}
                     <table>
@@ -26,7 +27,7 @@
                 {% endfor %}
             </form>
             <h3 class="panel-title">Abonnés</h3>
-            <h3 class="panel-title">-o-o-o-o-o-o</h3>
+            <h3 class="panel-title">-o-o-o-o-o-o-</h3>
 
             <table>
                 {% for follower in followers %}

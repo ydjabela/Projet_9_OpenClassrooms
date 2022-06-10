@@ -1,11 +1,11 @@
 # blog/views.py
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from itertools import chain
 from django.db.models import CharField, Value
 from blog.models import Ticket, Review, UserFollows
-from blog.forms import AddTicketsForm, AddCritiqueForm, UserForm
+from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm
+from django.db import IntegrityError
 
 
 @login_required
@@ -31,9 +31,47 @@ def post(request):
 
 @login_required
 def abonnements(request):
+    error=""
+    form = FollowForm()
     userfllows = UserFollows.objects.filter(user=request.user)
     followers = UserFollows.objects.filter(followed_user_id=request.user)
-    return render(request, 'blog/abonnements.html', context={'userfllows': userfllows, "followers": followers})
+    user_form = FollowForm(request.POST)
+    if request.method == "POST":
+        print('==============>1', user_form)
+        find_user = user_form.cleaned_data.get("username")
+        print('==============>2', find_user)
+        try:
+            found_user = User.objects.get(username=find_user)
+            print('==============>3', found_user)
+        except User.DoesNotExist:
+            error = f"{find_user} n'existe pas ! "
+            return render(request, 'blog/abonnements.html', context={
+            'userfllows': userfllows,
+            "followers": followers,
+            "form": form,
+            "error": error
+        })
+        try:
+            instance = UserFollows(user=request.user, followed_user=found_user)
+            instance.save()
+            followers = UserFollows.objects.filter(followed_user_id=request.user)
+            return redirect("abonnements")
+
+        except IntegrityError:
+            error = f"Vous avez déjà suivi {find_user}"
+            return render(request, 'abonnements.html', context={
+            'userfllows': userfllows,
+            "followers": followers,
+            "form": form,
+            "error": error
+        })
+
+    return render(request, 'blog/abonnements.html', context={
+        'userfllows': userfllows,
+        "followers": followers,
+        "form": form,
+        "error": error
+    })
 
 
 @login_required
