@@ -31,40 +31,53 @@ def post(request):
 
 @login_required
 def abonnements(request):
-    error=""
+    error = ""
     form = FollowForm()
+    context = {"form": form}
     userfllows = UserFollows.objects.filter(user=request.user)
     followers = UserFollows.objects.filter(followed_user_id=request.user)
+    # context.update(userfllows)
+    # context.update(followers)
     user_form = FollowForm(request.POST)
     if request.method == "POST":
-        print('==============>1', user_form)
         find_user = user_form.cleaned_data.get("username")
-        print('==============>2', find_user)
-        try:
-            found_user = User.objects.get(username=find_user)
-            print('==============>3', found_user)
-        except User.DoesNotExist:
-            error = f"{find_user} n'existe pas ! "
+        if find_user == request.user.username:
+            error = f"{find_user} Vous ne pouvez pas vous suivre vous-même "
             return render(request, 'blog/abonnements.html', context={
-            'userfllows': userfllows,
-            "followers": followers,
-            "form": form,
-            "error": error
-        })
-        try:
-            instance = UserFollows(user=request.user, followed_user=found_user)
-            instance.save()
-            followers = UserFollows.objects.filter(followed_user_id=request.user)
-            return redirect("abonnements")
+                'userfllows': userfllows,
+                "followers": followers,
+                "form": form,
+                "error": error
+            })
+        else:
+            try:
+                found_user = User.objects.get(username=find_user)
+                print('==============>3', found_user)
+                return redirect("abonnements")
+            except User.DoesNotExist:
+                error = f"{find_user} n'existe pas ! "
+                return render(request, 'blog/abonnements.html', context={
+                'userfllows': userfllows,
+                "followers": followers,
+                "form": form,
+                "error": error
+            })
 
-        except IntegrityError:
-            error = f"Vous avez déjà suivi {find_user}"
-            return render(request, 'abonnements.html', context={
-            'userfllows': userfllows,
-            "followers": followers,
-            "form": form,
-            "error": error
-        })
+
+            try:
+                instance = UserFollows(user=request.user, followed_user=found_user)
+                instance.save()
+                followers = UserFollows.objects.filter(followed_user_id=request.user)
+                return redirect("abonnements")
+
+            except User.IntegrityError:
+                error = f"Vous avez déjà suivi {find_user}"
+                return render(request, 'abonnements.html', context={
+                'userfllows': userfllows,
+                "followers": followers,
+                "form": form,
+                "error": error
+            })
 
     return render(request, 'blog/abonnements.html', context={
         'userfllows': userfllows,
