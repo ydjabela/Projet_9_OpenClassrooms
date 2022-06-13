@@ -28,6 +28,7 @@ urlpatterns = [
     path('home/', blog.views.home, name='home'),
     path('post/', blog.views.post, name='post'),
     path('abonnements/', blog.views.abonnements, name='abonnements'),
+    path('desabonnement/<str:pk>', blog.views.desabonnement, name='desabonnement'),
     path('add_tickets/', blog.views.add_tickets, name='add_tickets'),
     path('add_critique/', blog.views.add_critique, name='add_critique'),
 ]

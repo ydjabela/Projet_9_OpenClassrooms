@@ -30,62 +30,59 @@ def post(request):
 
 
 @login_required
-def abonnements(request):
+def abonnements(request, pk=None):
     error = ""
     form = FollowForm()
-    context = {"form": form}
     userfllows = UserFollows.objects.filter(user=request.user)
     followers = UserFollows.objects.filter(followed_user_id=request.user)
-    # context.update(userfllows)
-    # context.update(followers)
-    user_form = FollowForm(request.POST)
-    if request.method == "POST":
-        find_user = user_form.cleaned_data.get("username")
-        if find_user == request.user.username:
-            error = f"{find_user} Vous ne pouvez pas vous suivre vous-même "
-            return render(request, 'blog/abonnements.html', context={
-                'userfllows': userfllows,
-                "followers": followers,
-                "form": form,
-                "error": error
-            })
-        else:
-            try:
-                found_user = User.objects.get(username=find_user)
-                print('==============>3', found_user)
-                return redirect("abonnements")
-            except User.DoesNotExist:
-                error = f"{find_user} n'existe pas ! "
-                return render(request, 'blog/abonnements.html', context={
-                'userfllows': userfllows,
-                "followers": followers,
-                "form": form,
-                "error": error
-            })
-
-
-            try:
-                instance = UserFollows(user=request.user, followed_user=found_user)
-                instance.save()
-                followers = UserFollows.objects.filter(followed_user_id=request.user)
-                return redirect("abonnements")
-
-            except User.IntegrityError:
-                error = f"Vous avez déjà suivi {find_user}"
-                return render(request, 'abonnements.html', context={
-                'userfllows': userfllows,
-                "followers": followers,
-                "form": form,
-                "error": error
-            })
-
-    return render(request, 'blog/abonnements.html', context={
+    context = {
         'userfllows': userfllows,
         "followers": followers,
         "form": form,
         "error": error
-    })
+    }
 
+    if request.method == "POST":
+        user_form = FollowForm(request.POST)
+        if user_form.is_valid():
+            find_user = user_form.cleaned_data.get("username")
+            if find_user == request.user.username:
+                error = f"{find_user} Vous ne pouvez pas vous suivre vous-même "
+                context.update({"error": error})
+                return render(request, 'blog/abonnements.html', context=context)
+            else:
+                try:
+                    found_user = User.objects.get(username=find_user)
+                except User.DoesNotExist:
+                    error = f"{find_user} n'existe pas ! "
+                    context.update({"error": error})
+                    return render(request, 'blog/abonnements.html', context=context)
+                try:
+                    instance = UserFollows(user=request.user, followed_user=found_user)
+                    instance.save()
+                    followers = UserFollows.objects.filter(followed_user_id=request.user)
+                    context.update({"followers": followers})
+                    return redirect("abonnements")
+
+                except IntegrityError:
+                    error = f"Vous avez déjà suivi {find_user}"
+                    context.update({"error": error})
+                    return render(request, 'blog/abonnements.html', context=context)
+
+    return render(request, 'blog/abonnements.html', context=context)
+
+@login_required
+def desabonnement(request, pk):
+    # TODO
+    found_user = User.objects.get(id=pk)
+    print(found_user)
+    found_user = User.objects.get(username=found_user)
+    print(found_user)
+    #unfollow = UserFollows.objects.filter(followed_user_id=pk)
+    unfollow = UserFollows(user=request.user, followed_user_id=found_user)
+    print(unfollow)
+    unfollow.delete()
+    return redirect("abonnements")
 
 @login_required
 def add_critique(request):
@@ -95,6 +92,7 @@ def add_critique(request):
         if review_form.is_valid() and ticket_form.is_valid:
             review_form.save(request.user.id)
             return redirect("add_critique")
+
     else:
         review_form = AddCritiqueForm()
         ticket_form = AddTicketsForm()

@@ -2,7 +2,7 @@
 {% block content %}
 <div class="wrapper">
     <section class="login-container">
-        <div >
+        <div>
             <h2 class="panel-title" >Suivre d'autres utilisateurs</h2>
             <form class="search_bar" method="POST">
                 {%csrf_token%}
@@ -15,28 +15,22 @@
 
             <h3 class="panel-title">Abonnements</h3>
             <h3 class="panel-title">-o-o-o-o-o-o-</h3>
-            <form method="post">
                 {% for userfllow in userfllows %}
                     <table>
                         <tr>
                             <td class="userflowers_col">{{ userfllow.followed_user }}</td>
-                            <td><button type="submit" >Désabonner</button></td>
+                            <td><a type="submit" href="{% url 'desabonnement' userfllow.id %}">Désabonner</a></td>
                         </tr>
                     </table>
-
                 {% endfor %}
-            </form>
+
             <h3 class="panel-title">Abonnés</h3>
             <h3 class="panel-title">-o-o-o-o-o-o-</h3>
-
             <table>
                 {% for follower in followers %}
-
-                        <tr>
-                            <td class="flowers_col">{{ follower.user }}</td>
-                        </tr>
-
-
+                    <tr>
+                        <td class="flowers_col">{{ follower.user }}</td>
+                    </tr>
                 {% endfor %}
             </table>
         </div>
