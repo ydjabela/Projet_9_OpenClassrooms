@@ -4,6 +4,8 @@ from django.forms import ModelForm
 from django.conf import settings
 from django.forms.widgets import ClearableFileInput, TextInput,Textarea,RadioSelect
 
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 class AddTicketsForm(ModelForm):
     class Meta:
@@ -20,6 +22,8 @@ class AddTicketsForm(ModelForm):
         if commit:
             ticket.save()
         return ticket
+
+# ---------------------------------------------------------------------------------------------------------------------#
 
 
 class AddCritiqueForm(ModelForm):
@@ -38,6 +42,8 @@ class AddCritiqueForm(ModelForm):
         if commit:
             review.save()
         return review
+
+# ---------------------------------------------------------------------------------------------------------------------#
 
 
 class FollowForm(forms.Form):

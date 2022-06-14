@@ -7,7 +7,7 @@
             <form class="search_bar" method="POST">
                 {%csrf_token%}
                 {{form}}
-                <button class="default-button" type="submit" value="Suivre">Envoyer</button>
+                <button type="submit" value="Suivre">Envoyer</button>
             </form>
             {%if error is not Null%}
             <p class=error>{{error}}</p>
@@ -19,7 +19,7 @@
                     <table>
                         <tr>
                             <td class="userflowers_col">{{ userfllow.followed_user }}</td>
-                            <td><a type="submit" href="{% url 'desabonnement' userfllow.followed_user %}">Désabonner</a></td>
+                            <td><a type="submit" class="default-button" href="{% url 'desabonnement' userfllow.followed_user %}">Désabonner</a></td>
                         </tr>
                     </table>
                 {% endfor %}

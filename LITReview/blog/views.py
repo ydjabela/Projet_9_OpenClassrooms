@@ -7,30 +7,40 @@ from blog.models import Ticket, Review, UserFollows
 from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm
 from django.db import IntegrityError
 
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 @login_required
 def home(request):
     tickets = Ticket.objects.all()
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
     reviews = Review.objects.all()
     reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
     return render(request, 'blog/home.html', context={'tickets': tickets, 'reviews': reviews})
 
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 @login_required
 def post(request):
-    list_posts = Review.objects.filter(user_id=request.user.id)
-    return render(
-        request,
-        template_name="blog/post.html",
-        context={
-            'reviews': list_posts,
-        })
+    reviews = Review.objects.filter(user_id=request.user.id)
+    tickets = Review.objects.filter(user_id=request.user.id)
+    return render(request, "blog/post.html", context={'reviews': reviews, 'tickets': tickets})
+
+# ---------------------------------------------------------------------------------------------------------------------#
 
 
 @login_required
-def abonnements(request, pk=None):
+def deletepost(request, pk):
+    userpostTodel = Review.objects.get(id=pk, user_id=request.user.id)
+    userpostTodel.delete()
+    return redirect("post")
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
+
+@login_required
+def abonnements(request):
     error = ""
     form = FollowForm()
     userfllows = UserFollows.objects.filter(user=request.user)
@@ -68,17 +78,20 @@ def abonnements(request, pk=None):
                     error = f"Vous avez déjà suivi {find_user}"
                     context.update({"error": error})
                     return render(request, 'blog/abonnements.html', context=context)
-
     return render(request, 'blog/abonnements.html', context=context)
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 @login_required
 def desabonnement(request, pk):
     userTodel = User.objects.get(username=pk)
-    userFollowstoDel = UserFollows.objects.get(
-        followed_user_id=userTodel.id, user_id=request.user.id
-        )
+    userFollowstoDel = UserFollows.objects.get(followed_user_id=userTodel.id, user_id=request.user.id)
     userFollowstoDel.delete()
     return redirect("abonnements")
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 @login_required
 def add_critique(request):
@@ -95,6 +108,8 @@ def add_critique(request):
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'blog/add_critique.html', context=context)
 
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 @login_required
 def add_tickets(request):
@@ -107,3 +122,5 @@ def add_tickets(request):
         ticket_form = AddTicketsForm()
 
     return render(request, "blog/add_tickets.html", context={"ticket_form": ticket_form})
+
+# ---------------------------------------------------------------------------------------------------------------------#

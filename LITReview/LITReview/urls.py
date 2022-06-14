@@ -20,6 +20,8 @@ import blog.views
 from django.conf import settings
 from django.conf.urls.static import static
 
+# ---------------------------------------------------------------------------------------------------------------------#
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', authentification.views.login_page, name='login'),
@@ -27,6 +29,8 @@ urlpatterns = [
     path('inscription/', authentification.views.inscription, name='inscription'),
     path('home/', blog.views.home, name='home'),
     path('post/', blog.views.post, name='post'),
+    path('deletepost/<str:pk>', blog.views.deletepost, name='deletepost'),
+    path('modifiepost/<str:pk>', blog.views.modifiepost, name='modifiepost'),
     path('abonnements/', blog.views.abonnements, name='abonnements'),
     path('desabonnement/<str:pk>', blog.views.desabonnement, name='desabonnement'),
     path('add_tickets/', blog.views.add_tickets, name='add_tickets'),

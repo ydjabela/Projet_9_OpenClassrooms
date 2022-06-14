@@ -1,17 +1,31 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <h2>Posts</h2>
-    {% for review in reviews %}
-        <p>Vous avez publié une critique    {{ review.time_created }}</p>
-        <p>étoiles : {{ review.rating }}</p>
-        <p> {{ review.body }}</p>
-        <p>{{ review.headline }}</p>
-        <ul>
-            <li>Ticket - {{ review.ticket.user }}
-                <p>{{ review.ticket.title }}</p>
-                <p>{{ review.ticket.description }}</p>
-                <img src="/media/{{ review.ticket.image }}">
-            </li>
-        </ul>
-    {% endfor %}
-{% endblock content %}
+<div class="wrapper">
+    <section class="login-container">
+        <h2>Posts</h2>
+        {% for review in reviews %}
+            <div class="encadrement_post_critique">
+                <div class="publication_date">
+                    <p>Vous avez publié une critique</p><p> {{ review.time_created }}</p>
+                </div>
+                <p>étoiles : {{ review.rating }}</p>
+                <p> {{ review.body }}</p>
+                <p>{{ review.headline }}</p>
+                <div class="encadrement_post_critique">
+                    <p>
+                        <p>Ticket - {{ review.ticket.user }}
+                            <p>{{ review.ticket.title }}</p>
+                            <p>{{ review.ticket.description }}</p>
+                            <img src="/media/{{ review.ticket.image }}">
+                        </p>
+                    </p>
+                </div>
+                <div class="button-container">
+                    <a type="submit" class="default-button" href="{% url 'deletepost' review.id %}">Supprimer</a>
+                    <a type="submit" class="default-button" href="{% url 'modifiepost' review.id %}">modifier</a>
+                </div>
+            {% endfor %}
+        {% endblock content %}
+        </div>
+    </section>
+</div>

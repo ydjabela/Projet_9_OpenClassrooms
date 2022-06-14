@@ -15,13 +15,13 @@
         <p>étoiles : {{ review.rating }}</p>
         <p> {{ review.body }}</p>
         <p>{{ review.headline }}</p>
-        <ul>
-            <li>Ticket - {{ review.ticket.user }}
-                <p>{{ review.ticket.title }}</p>
-                <p>{{ review.ticket.description }}</p>
-                <img src="/media/{{ review.ticket.image }}">
-            </li>
-        </ul>
+
+        <p>Ticket - {{ review.ticket.user }}
+            <p>{{ review.ticket.title }}</p>
+            <p>{{ review.ticket.description }}</p>
+            <img src="/media/{{ review.ticket.image }}">
+        </p>
+
     {% endfor %}
     </section>
 
