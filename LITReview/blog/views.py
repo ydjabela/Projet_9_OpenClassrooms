@@ -73,15 +73,11 @@ def abonnements(request, pk=None):
 
 @login_required
 def desabonnement(request, pk):
-    # TODO
-    found_user = User.objects.get(id=pk)
-    print(found_user)
-    found_user = User.objects.get(username=found_user)
-    print(found_user)
-    #unfollow = UserFollows.objects.filter(followed_user_id=pk)
-    unfollow = UserFollows(user=request.user, followed_user_id=found_user)
-    print(unfollow)
-    unfollow.delete()
+    userTodel = User.objects.get(username=pk)
+    userFollowstoDel = UserFollows.objects.get(
+        followed_user_id=userTodel.id, user_id=request.user.id
+        )
+    userFollowstoDel.delete()
     return redirect("abonnements")
 
 @login_required

@@ -19,7 +19,7 @@
                     <table>
                         <tr>
                             <td class="userflowers_col">{{ userfllow.followed_user }}</td>
-                            <td><a type="submit" href="{% url 'desabonnement' userfllow.id %}">Désabonner</a></td>
+                            <td><a type="submit" href="{% url 'desabonnement' userfllow.followed_user %}">Désabonner</a></td>
                         </tr>
                     </table>
                 {% endfor %}
