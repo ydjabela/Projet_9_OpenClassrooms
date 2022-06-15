@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 from blog.models import Ticket, Review, UserFollows
 from django.forms import ModelForm
 from django.conf import settings
@@ -49,3 +50,21 @@ class AddCritiqueForm(ModelForm):
 class FollowForm(forms.Form):
     username = forms.CharField(label="", widget=TextInput({"placeholder": "Username", "class": "form-title"}))
 
+# ---------------------------------------------------------------------------------------------------------------------#
+
+
+class NewTicketForm(ModelForm):
+    class Meta:
+        model = Ticket
+        fields = [
+            "title",
+            "description",
+            "image"
+            ]
+
+    def save(self, user_id, commit=True,):
+        ticket = super(NewTicketForm, self).save(commit=False)
+        ticket.user_id = user_id
+        if commit:
+            ticket.save()
+        return ticket

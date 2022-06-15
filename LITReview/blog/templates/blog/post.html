@@ -22,7 +22,9 @@
                 </div>
                 <div class="button-container">
                     <a type="submit" class="default-button" href="{% url 'deletepost' review.id %}">Supprimer</a>
-                    <a type="submit" class="default-button" href="{% url 'modifiepost' review.id %}">modifier</a>
+                    <form method="get">
+                        <a type="submit" class="default-button" href="{% url 'modifiepost' review.ticket.id %}">modifier</a>
+                    </form>
                 </div>
             {% endfor %}
         {% endblock content %}

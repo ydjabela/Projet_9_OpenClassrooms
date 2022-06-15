@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="wrapper">
+    <section class="login-container">
+        <div>
+            <header>
+                <h2>Modifier une critique</h2>
+            </header>
+
+            <form action="" method="post" enctype="multipart/form-data">
+                {{ ticket_form.as_p }}
+                {{ review_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
+            </form>
+            <p>{{ message }}</p>
+        </div>
+    </section>
+</div>
+{% endblock content %}

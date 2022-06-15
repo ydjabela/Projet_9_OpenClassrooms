@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import CharField, Value
 from blog.models import Ticket, Review, UserFollows
-from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm
+from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm, NewTicketForm
 from django.db import IntegrityError
 
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -35,6 +35,30 @@ def deletepost(request, pk):
     userpostTodel = Review.objects.get(id=pk, user_id=request.user.id)
     userpostTodel.delete()
     return redirect("post")
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
+@login_required
+def modifiepost(request, pk):
+    post_to_modify = Ticket.objects.get(id=pk, user_id=request.user.id)
+    if request.method == "GET":
+        ticket_form = NewTicketForm(instance=modifiepost)
+        return render(
+            request=request,
+            template_name="blog/modifiepost.html",
+            context={"ticket_form": ticket_form})
+    elif request.method == "POST":
+        ticket_form = NewTicketForm(request.POST, request.FILES, initial={
+            "id": post_to_modify.id,
+            "ticket": post_to_modify.ticket,
+            "description": post_to_modify.description,
+            "image": post_to_modify.image})
+        if ticket_form.is_valid():
+            post_to_modify.ticket = ticket_form.cleaned_data.get("ticket")
+            post_to_modify.description = ticket_form.cleaned_data.get("description")
+            post_to_modify.image = ticket_form.cleaned_data.get("image")
+            post_to_modify.save()
+        return redirect("posts")
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -101,7 +125,6 @@ def add_critique(request):
         if review_form.is_valid() and ticket_form.is_valid:
             review_form.save(request.user.id)
             return redirect("add_critique")
-
     else:
         review_form = AddCritiqueForm()
         ticket_form = AddTicketsForm()
