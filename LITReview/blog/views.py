@@ -61,11 +61,11 @@ def modifiepost(request, pk):
     elif request.method == "POST":
         ticket_form = NewTicketForm(request.POST, request.FILES, initial={
             "id": post_to_modify.id,
-            "ticket": post_to_modify.ticket,
+            "title": post_to_modify.title,
             "description": post_to_modify.description,
             "image": post_to_modify.image})
         if ticket_form.is_valid():
-            post_to_modify.ticket = ticket_form.cleaned_data.get("ticket")
+            post_to_modify.ticket = ticket_form.cleaned_data.get("title")
             post_to_modify.description = ticket_form.cleaned_data.get("description")
             post_to_modify.image = ticket_form.cleaned_data.get("image")
             post_to_modify.save()
@@ -161,7 +161,7 @@ def add_critique(request):
         review_form = AddCritiqueForm(request.POST)
         if review_form.is_valid() and ticket_form.is_valid:
             review_form.save(request.user.id)
-            return redirect("add_critique")
+            return redirect("post")
     else:
         review_form = AddCritiqueForm()
         ticket_form = AddTicketsForm()
@@ -177,7 +177,7 @@ def add_tickets(request):
         ticket_form = AddTicketsForm(request.POST, request.FILES)
         if ticket_form.is_valid():
             ticket_form.save(request.user.id)
-            return redirect("add_tickets")
+            return redirect("post")
     else:
         ticket_form = AddTicketsForm()
 

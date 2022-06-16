@@ -1,7 +1,8 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <section >
-        <div class="login-container_home">
+<div class="wrapper">
+    <section class="login-container">
+        <div class="login_container_home">
             <form method="link" action="{% url 'add_tickets' %}">
                 <button type="submit" class="btn btn-lg btn-success btn-block">Ajouter  un  ticket</button>
             </form>
@@ -9,21 +10,21 @@
                 <button type="submit" class="btn btn-lg btn-success btn-block">Créer une critique</button>
             </form>
         </div>
-
         {% for review in reviews %}
-        <p>Vous avez publié une critique    {{ review.time_created }}</p>
-        <p>étoiles : {{ review.rating }}</p>
-        <p> {{ review.body }}</p>
-        <p>{{ review.headline }}</p>
-
-        <p>Ticket - {{ review.ticket.user }}
-            <p>{{ review.ticket.title }}</p>
-            <p>{{ review.ticket.description }}</p>
-            <img src="/media/{{ review.ticket.image }}">
-        </p>
-
-    {% endfor %}
+            <div class="encadrement_post_critique">
+                <p>Vous avez publié une critique    {{ review.time_created }}</p>
+                <p>étoiles : {{ review.rating }}</p>
+                <p> {{ review.body }}</p>
+                <p>{{ review.headline }}</p>
+                <div class="encadrement_post_critique">
+                    <p>Ticket - {{ review.ticket.user }}</p>
+                    <p>{{ review.ticket.title }}</p>
+                    <p>{{ review.ticket.description }}</p>
+                    <img src="/media/{{ review.ticket.image }}">
+                </div>
+            </div>
+        <p></p>
+        {% endfor %}
     </section>
-
-
+</div>
 {% endblock content %}

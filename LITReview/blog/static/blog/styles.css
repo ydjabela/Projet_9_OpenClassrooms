@@ -101,17 +101,21 @@ header li:hover li a:hover {
 }
 
 .login-container {
-    display: flex;
+    display: block;
     width: 750px;
     margin: auto;
     flex-direction: column;
     align-items: center;
 }
-.login-container_home
+.login_container_home
 {
     display: flex;
-    width: 750px;
-    margin: auto;
+    justify-content: space-evenly;
+}
+.login_container_post
+{
+    display: flex;
+    justify-content: space-evenly;
 }
 .button-container {
     display: flex;
@@ -180,11 +184,11 @@ table, th, td {
   padding: 10px;
 }
 .userflowers_col {
-    width: 400px;
+    width: 78%;
     text-align: left;
 }
 .flowers_col {
-    width: 550px;
+    width: 8.5%;
     text-align: left
 }
 
