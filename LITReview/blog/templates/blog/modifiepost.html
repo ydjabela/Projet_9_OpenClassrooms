@@ -6,9 +6,12 @@
             <header>
                 <h2>Modifier une critique</h2>
             </header>
-
+            <p>Ticket - {{ tickets.user }}</p>
+            <p>{{ tickets.title }}</p>
+            <p>{{ tickets.description }}</p>
+            <img src="/media/{{tickets.image }}">
             <form action="" method="post" enctype="multipart/form-data">
-                {{ ticket_form.as_p }}
+                {{ review_form.as_p }}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
             </form>

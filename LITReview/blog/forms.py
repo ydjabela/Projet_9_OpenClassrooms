@@ -68,3 +68,22 @@ class NewTicketForm(ModelForm):
         if commit:
             ticket.save()
         return ticket
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
+
+class NewReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = [
+            "rating",
+            "headline",
+            "body"
+            ]
+
+    def save(self, user_id, commit=True,):
+        review = super(NewReviewForm, self).save(commit=False)
+        review.user_id = user_id
+        if commit:
+            review.save()
+        return review

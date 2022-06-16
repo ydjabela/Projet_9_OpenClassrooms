@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import CharField, Value
 from blog.models import Ticket, Review, UserFollows
-from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm, NewTicketForm
+from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm, NewTicketForm, NewReviewForm
 from django.db import IntegrityError
 
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -48,26 +48,27 @@ def deleteticket(request, pk):
 # ---------------------------------------------------------------------------------------------------------------------#
 
 @login_required
-def modifiepost(request, pk):
-    post_to_modify = Ticket.objects.get(id=pk)
+def modifiepost(request, pk, id_post):
+    post_to_modify = Review.objects.get(id=pk)
+    tickets = Ticket.objects.get(id=id_post)
     print(pk, post_to_modify)
     if request.method == "GET":
-        ticket_form = NewTicketForm(instance=post_to_modify)
+        review_form = NewReviewForm(instance=post_to_modify)
         return render(
             request=request,
             template_name="blog/modifiepost.html",
-            context={"ticket_form": ticket_form})
-
+            context={"review_form": review_form, "tickets": tickets})
     elif request.method == "POST":
-        ticket_form = NewTicketForm(request.POST, request.FILES, initial={
+        ticket_form = NewReviewForm(request.POST, request.FILES, initial={
             "id": post_to_modify.id,
-            "title": post_to_modify.title,
-            "description": post_to_modify.description,
-            "image": post_to_modify.image})
+            "rating": post_to_modify.rating,
+            "headline": post_to_modify.headline,
+            "body": post_to_modify.body})
         if ticket_form.is_valid():
-            post_to_modify.ticket = ticket_form.cleaned_data.get("title")
-            post_to_modify.description = ticket_form.cleaned_data.get("description")
-            post_to_modify.image = ticket_form.cleaned_data.get("image")
+            post_to_modify.rating = ticket_form.cleaned_data.get("rating")
+            post_to_modify.headline = ticket_form.cleaned_data.get("headline")
+            post_to_modify.body = ticket_form.cleaned_data.get("body")
+            post_to_modify.ticket_id = id_post
             post_to_modify.save()
         return redirect("post")
 
@@ -76,14 +77,12 @@ def modifiepost(request, pk):
 @login_required
 def modifieticket(request, pk):
     post_to_modify = Ticket.objects.get(id=pk)
-    print(pk, post_to_modify)
     if request.method == "GET":
         ticket_form = NewTicketForm(instance=post_to_modify)
         return render(
             request=request,
             template_name="blog/modifieticket.html",
             context={"ticket_form": ticket_form})
-
     elif request.method == "POST":
         ticket_form = NewTicketForm(request.POST, request.FILES, initial={
             "id": post_to_modify.id,
@@ -91,7 +90,7 @@ def modifieticket(request, pk):
             "description": post_to_modify.description,
             "image": post_to_modify.image})
         if ticket_form.is_valid():
-            post_to_modify.ticket = ticket_form.cleaned_data.get("title")
+            post_to_modify.title = ticket_form.cleaned_data.get("title")
             post_to_modify.description = ticket_form.cleaned_data.get("description")
             post_to_modify.image = ticket_form.cleaned_data.get("image")
             post_to_modify.save()
@@ -112,7 +111,6 @@ def abonnements(request):
         "form": form,
         "error": error
     }
-
     if request.method == "POST":
         user_form = FollowForm(request.POST)
         if user_form.is_valid():
@@ -180,7 +178,6 @@ def add_tickets(request):
             return redirect("post")
     else:
         ticket_form = AddTicketsForm()
-
     return render(request, "blog/add_tickets.html", context={"ticket_form": ticket_form})
 
 # ---------------------------------------------------------------------------------------------------------------------#
