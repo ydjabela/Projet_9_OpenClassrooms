@@ -4,17 +4,25 @@
     <section class="login-container">
         <div>
             <header>
-                <h2>Modifier une critique</h2>
+                <h2 class="panel-title" >Modifier une critique</h2>
             </header>
-            <p>Ticket - {{ tickets.user }}</p>
-            <p>{{ tickets.title }}</p>
-            <p>{{ tickets.description }}</p>
-            <img src="/media/{{tickets.image }}">
-            <form action="" method="post" enctype="multipart/form-data">
-                {{ review_form.as_p }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
-            </form>
+            <div class="encadrement_post_critique">
+                <p>Vous êtes en train de poster en réponse à</p>
+                <div class="encadrement_post_critique">
+                    <p>Ticket - {{ tickets.user }}</p>
+                    <p>{{ tickets.title }}</p>
+                    <p>{{ tickets.description }}</p>
+                    <img src="/media/{{tickets.image }}">
+                </div>
+            </div>
+            <div class="encadrement_post_critique">
+                <p>Critique</p>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {{ review_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
+                </form>
+            </div>
             <p>{{ message }}</p>
         </div>
     </section>

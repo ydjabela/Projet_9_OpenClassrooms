@@ -2,15 +2,12 @@
 {% block content %}
 <div class="wrapper">
     <section class="login-container">
+        <h2 class="panel-title" >Modifier un ticket</h2>
         <div>
-            <header>
-                <h2>Modifier un ticket</h2>
-            </header>
-
-            <form action="" method="post" enctype="multipart/form-data">
-                {{ ticket_form.as_p }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
+           <form action="" method="post" enctype="multipart/form-data">
+            {{ ticket_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
             </form>
             <p>{{ message }}</p>
         </div>

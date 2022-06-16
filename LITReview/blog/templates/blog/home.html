@@ -25,6 +25,17 @@
             </div>
         <p></p>
         {% endfor %}
+
+        {% for ticket in tickets %}
+            <div class="encadrement_post_critique">
+                <p>Vous avez publié un ticket    {{ ticket.time_created }}</p>
+                <p>Ticket - {{ticket.user }}</p>
+                <p>{{ticket.title }}</p>
+                <p>{{ticket.description }}</p>
+                <img src="/media/{{ticket.image }}">
+            </div>
+        <p></p>
+        {% endfor %}
     </section>
 </div>
 {% endblock content %}
