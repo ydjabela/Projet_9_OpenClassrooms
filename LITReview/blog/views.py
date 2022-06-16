@@ -24,7 +24,7 @@ def home(request):
 @login_required
 def post(request):
     reviews = Review.objects.filter(user_id=request.user.id)
-    tickets = Review.objects.filter(user_id=request.user.id)
+    tickets = Ticket.objects.filter(user_id=request.user.id)
     return render(request, "blog/post.html", context={'reviews': reviews, 'tickets': tickets})
 
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -38,15 +38,26 @@ def deletepost(request, pk):
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
+
+@login_required
+def deleteticket(request, pk):
+    userpostTodel = Ticket.objects.get(id=pk, user_id=request.user.id)
+    userpostTodel.delete()
+    return redirect("post")
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
 @login_required
 def modifiepost(request, pk):
-    post_to_modify = Ticket.objects.get(id=pk, user_id=request.user.id)
+    post_to_modify = Ticket.objects.get(id=pk)
+    print(pk, post_to_modify)
     if request.method == "GET":
-        ticket_form = NewTicketForm(instance=modifiepost)
+        ticket_form = NewTicketForm(instance=post_to_modify)
         return render(
             request=request,
             template_name="blog/modifiepost.html",
             context={"ticket_form": ticket_form})
+
     elif request.method == "POST":
         ticket_form = NewTicketForm(request.POST, request.FILES, initial={
             "id": post_to_modify.id,
@@ -58,7 +69,33 @@ def modifiepost(request, pk):
             post_to_modify.description = ticket_form.cleaned_data.get("description")
             post_to_modify.image = ticket_form.cleaned_data.get("image")
             post_to_modify.save()
-        return redirect("posts")
+        return redirect("post")
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
+@login_required
+def modifieticket(request, pk):
+    post_to_modify = Ticket.objects.get(id=pk)
+    print(pk, post_to_modify)
+    if request.method == "GET":
+        ticket_form = NewTicketForm(instance=post_to_modify)
+        return render(
+            request=request,
+            template_name="blog/modifieticket.html",
+            context={"ticket_form": ticket_form})
+
+    elif request.method == "POST":
+        ticket_form = NewTicketForm(request.POST, request.FILES, initial={
+            "id": post_to_modify.id,
+            "title": post_to_modify.title,
+            "description": post_to_modify.description,
+            "image": post_to_modify.image})
+        if ticket_form.is_valid():
+            post_to_modify.ticket = ticket_form.cleaned_data.get("title")
+            post_to_modify.description = ticket_form.cleaned_data.get("description")
+            post_to_modify.image = ticket_form.cleaned_data.get("image")
+            post_to_modify.save()
+        return redirect("post")
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
