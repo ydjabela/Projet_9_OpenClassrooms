@@ -191,7 +191,9 @@ table, th, td {
     width: 8.5%;
     text-align: left
 }
-
+img{
+    width: 300px;
+}
 table {
     border-collapse:collapse;
     caption-side:bottom;

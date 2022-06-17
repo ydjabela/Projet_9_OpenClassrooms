@@ -29,6 +29,21 @@ def post(request):
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
+@login_required
+def creatreview(request, pk):
+    ticket = Ticket.objects.get(id=pk)
+    if request.method == "POST":
+        review_form = AddCritiqueForm(request.POST)
+        if review_form.is_valid():
+            review_form.save(request.user.id, ticket=ticket)
+        return redirect("home")
+    else:
+        review_form = AddCritiqueForm()
+    context = {'ticket': ticket, 'review_form': review_form}
+    return render(request, 'blog/creatreview.html', context=context)
+
+# ---------------------------------------------------------------------------------------------------------------------#
+
 
 @login_required
 def deletepost(request, pk):

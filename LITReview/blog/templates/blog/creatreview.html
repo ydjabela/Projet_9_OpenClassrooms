@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="wrapper">
+    <section class="login-container">
+        <div>
+            <header>
+                <h2 class="panel-title" >Créer une critique</h2>
+            </header>
+            <div class="encadrement_post_critique">
+                <p>Vous êtes en train de poster en réponse à</p>
+                <div class="encadrement_post_critique">
+                    <p>Ticket - {{ ticket.user }}</p>
+                    <p>{{ ticket.title }}</p>
+                    <p>{{ ticket.description }}</p>
+                    <img src="/media/{{ticket.image }}">
+                </div>
+            </div>
+            <div class="encadrement_post_critique">
+                <p>Critique</p>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {{ review_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
+                </form>
+            </div>
+            <p>{{ message }}</p>
+        </div>
+    </section>
+</div>
+{% endblock content %}

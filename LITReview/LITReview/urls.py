@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout/', authentification.views.logout_user, name='logout'),
     path('inscription/', authentification.views.inscription, name='inscription'),
     path('home/', blog.views.home, name='home'),
+    path('creatreview/<int:pk>', blog.views.creatreview, name='creatreview'),
     path('post/', blog.views.post, name='post'),
     path('deletepost/<str:pk>', blog.views.deletepost, name='deletepost'),
     path('modifiepost/<int:pk><int:id_post>', blog.views.modifiepost, name='modifiepost'),
