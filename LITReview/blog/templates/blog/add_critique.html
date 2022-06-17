@@ -2,16 +2,18 @@
 {% block content %}
 <div class="wrapper">
     <section class="login-container">
+        <h2 class="panel-title" >Ajouter une critique</h2>
         <div>
-            <header>
-                <h2>Ajouter une critique</h2>
-            </header>
-
             <form action="" method="post" enctype="multipart/form-data">
-                {{ ticket_form.as_p }}
-                {{ review_form.as_p }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
+                <div class="encadrement_post_critique">
+                    {{ ticket_form.as_p }}
+                </div>
+                <div class="encadrement_post_critique">
+                    {{ review_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg btn-success btn-block">Envoyer</button>
+                </div>
+
             </form>
             <p>{{ message }}</p>
         </div>

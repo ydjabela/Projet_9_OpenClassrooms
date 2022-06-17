@@ -51,7 +51,6 @@ def deleteticket(request, pk):
 def modifiepost(request, pk, id_post):
     post_to_modify = Review.objects.get(id=pk)
     tickets = Ticket.objects.get(id=id_post)
-    print(pk, post_to_modify)
     if request.method == "GET":
         review_form = NewReviewForm(instance=post_to_modify)
         return render(
@@ -157,12 +156,13 @@ def add_critique(request):
     if request.method == "POST":
         ticket_form = AddTicketsForm(request.POST, request.FILES)
         review_form = AddCritiqueForm(request.POST)
-        if review_form.is_valid() and ticket_form.is_valid:
-            review_form.save(request.user.id)
-            return redirect("post")
+        if ticket_form.is_valid() and review_form.is_valid():
+            ticket = ticket_form.save(request.user.id)
+            review_form.save(request.user.id, ticket=ticket)
+        return redirect("home")
     else:
-        review_form = AddCritiqueForm()
         ticket_form = AddTicketsForm()
+        review_form = AddCritiqueForm()
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'blog/add_critique.html', context=context)
 

@@ -28,8 +28,7 @@
 
         {% for ticket in tickets %}
             <div class="encadrement_post_critique">
-                <p>Vous avez publié un ticket    {{ ticket.time_created }}</p>
-                <p>Ticket - {{ticket.user }}</p>
+                <p>{{ticket.user }} a demandé une critique    {{ ticket.time_created }}</p>
                 <p>{{ticket.title }}</p>
                 <p>{{ticket.description }}</p>
                 <img src="/media/{{ticket.image }}">

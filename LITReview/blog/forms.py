@@ -31,15 +31,15 @@ class AddCritiqueForm(ModelForm):
     class Meta:
         model = Review
         fields = [
-            "ticket",
             "rating",
             "headline",
             "body"
             ]
 
-    def save(self, user_id, commit=True,):
+    def save(self, user_id, ticket, commit=True,):
         review = super(AddCritiqueForm, self).save(commit=False)
         review.user_id = user_id
+        review.ticket = ticket
         if commit:
             review.save()
         return review
