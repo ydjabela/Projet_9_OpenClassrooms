@@ -1,9 +1,7 @@
 from django import forms
-from django.forms import ModelForm
 from blog.models import Ticket, Review, UserFollows
 from django.forms import ModelForm
-from django.conf import settings
-from django.forms.widgets import ClearableFileInput, TextInput,Textarea,RadioSelect
+from django.forms.widgets import TextInput
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -16,6 +14,8 @@ class AddTicketsForm(ModelForm):
             "description",
             "image"
             ]
+    title = forms.CharField(label='Titre')
+    image = forms.ImageField(label='Image')
 
     def save(self, user_id, commit=True,):
         ticket = super(AddTicketsForm, self).save(commit=False)

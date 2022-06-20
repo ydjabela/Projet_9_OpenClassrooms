@@ -15,7 +15,7 @@ def home(request):
     tickets = Ticket.objects.all()
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
     reviews = Review.objects.all()
-    reviews = reviews.annotate(content_type=Value('TICKET', CharField()))
+    reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
     return render(request, 'blog/home.html', context={'tickets': tickets, 'reviews': reviews})
 
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -64,7 +64,8 @@ def deleteticket(request, pk):
 
 @login_required
 def modifiepost(request, pk, id_post):
-    post_to_modify = Review.objects.get(id=pk)
+    print(pk, id_post)
+    post_to_modify = Review.objects.get(id=pk, user_id=request.user.id)
     tickets = Ticket.objects.get(id=id_post)
     if request.method == "GET":
         review_form = NewReviewForm(instance=post_to_modify)

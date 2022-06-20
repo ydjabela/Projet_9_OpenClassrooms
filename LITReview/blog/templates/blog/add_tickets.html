@@ -2,15 +2,14 @@
 {% block content %}
 <div class="wrapper">
     <section class="login-container">
-        <div>
-            <header>
-                <h2>Ajouter  un ticket</h2>
-            </header>
-
+            <h2 class="panel-title">Ajouter  un ticket</h2>
+        <div class="input_class">
             <form  action="" method="post" enctype="multipart/form-data">
                 {{ ticket_form.as_p }}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-lg btn-success btn-block">Ajouter  un Tickets</button>
+                <div class="button-container">
+                    <button type="submit" class="default-button" >Envoyer</button>
+                </div>
             </form>
             <p>{{ message }}</p>
         </div>
