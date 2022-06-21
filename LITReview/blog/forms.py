@@ -15,6 +15,7 @@ class AddTicketsForm(ModelForm):
             "image"
             ]
     title = forms.CharField(label='Titre')
+    title.widget.attrs.update({'class': 'title_class'})
     image = forms.ImageField(label='Image')
 
     def save(self, user_id, commit=True,):
