@@ -15,7 +15,8 @@ class AddTicketsForm(ModelForm):
             "image"
             ]
     title = forms.CharField(label='Titre')
-    title.widget.attrs.update({'class': 'title_class'})
+    description = forms.CharField(label='Description')
+    description.widget.attrs.update({'class': 'description_class'})
     image = forms.ImageField(label='Image')
 
     def save(self, user_id, commit=True,):
@@ -32,10 +33,15 @@ class AddCritiqueForm(ModelForm):
     class Meta:
         model = Review
         fields = [
-            "rating",
             "headline",
+            "rating",
             "body"
             ]
+
+    headline = forms.CharField(label='Titre')
+    rating = forms.IntegerField(label='Note')
+    body = forms.CharField(label='Commentaire')
+    body.widget.attrs.update({'class': 'description_class'})
 
     def save(self, user_id, ticket, commit=True,):
         review = super(AddCritiqueForm, self).save(commit=False)
@@ -54,37 +60,3 @@ class FollowForm(forms.Form):
 # ---------------------------------------------------------------------------------------------------------------------#
 
 
-class NewTicketForm(ModelForm):
-    class Meta:
-        model = Ticket
-        fields = [
-            "title",
-            "description",
-            "image"
-            ]
-
-    def save(self, user_id, commit=True,):
-        ticket = super(NewTicketForm, self).save(commit=False)
-        ticket.user_id = user_id
-        if commit:
-            ticket.save()
-        return ticket
-
-# ---------------------------------------------------------------------------------------------------------------------#
-
-
-class NewReviewForm(ModelForm):
-    class Meta:
-        model = Review
-        fields = [
-            "rating",
-            "headline",
-            "body"
-            ]
-
-    def save(self, user_id, commit=True,):
-        review = super(NewReviewForm, self).save(commit=False)
-        review.user_id = user_id
-        if commit:
-            review.save()
-        return review
