@@ -169,16 +169,16 @@ def desabonnement(request, pk):
 
 @login_required
 def add_critique(request):
+    ticket_form = AddTicketsForm()
+    review_form = AddCritiqueForm()
     if request.method == "POST":
-        ticket_form = AddTicketsForm(request.POST, request.FILES)
         review_form = AddCritiqueForm(request.POST)
+        ticket_form = AddTicketsForm(request.POST, request.FILES)
         if ticket_form.is_valid() and review_form.is_valid():
             ticket = ticket_form.save(request.user.id)
             review_form.save(request.user.id, ticket=ticket)
         return redirect("home")
-    else:
-        ticket_form = AddTicketsForm()
-        review_form = AddCritiqueForm()
+
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'blog/add_critique.html', context=context)
 

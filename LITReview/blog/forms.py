@@ -39,9 +39,11 @@ class AddCritiqueForm(ModelForm):
             ]
 
     headline = forms.CharField(label='Titre')
-    rating = forms.IntegerField(label='Note')
     body = forms.CharField(label='Commentaire')
     body.widget.attrs.update({'class': 'description_class'})
+    RATINGS = [("0", 0), ("1", 1), ("2", 2), ("3", 3), ("4", 4), ("5", 5)]
+    rating = forms.ChoiceField(label='Note', widget=forms.RadioSelect, choices=RATINGS)
+    rating.widget.attrs.update({'class': 'rating_class'})
 
     def save(self, user_id, ticket, commit=True,):
         review = super(AddCritiqueForm, self).save(commit=False)
