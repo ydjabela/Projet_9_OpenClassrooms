@@ -191,7 +191,7 @@ def add_tickets(request):
         ticket_form = AddTicketsForm(request.POST, request.FILES)
         if ticket_form.is_valid():
             ticket_form.save(request.user.id)
-            return redirect("post")
+            return redirect("home")
     else:
         ticket_form = AddTicketsForm()
     return render(request, "blog/add_tickets.html", context={"ticket_form": ticket_form})

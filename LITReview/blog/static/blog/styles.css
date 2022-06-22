@@ -111,6 +111,8 @@ header li:hover li a:hover {
 {
     display: flex;
     justify-content: space-evenly;
+    margin-bottom:40px;
+    padding: 16px;
 }
 .login_container_post
 {
@@ -131,7 +133,6 @@ section.login-container > div{
 
 form input[type="text"],
 form button[type="submit"] {
-    padding: 16px;
     color: #333;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -230,6 +231,30 @@ table {
     flex-direction: column;
     margin-bottom:40px;
 }
+.input_class >div> p {
+    display: flex;
+    width: 650px;
+    flex-direction: column;
+    margin-bottom:40px;
+    margin-left:20px;
+}
 .description_class{
+    padding: 16px;
     height: 300px;
+    padding-bottom: 295px;
+    box-sizing: border-box;
+}
+.rating_class {
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    align-content: flex-end;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+#id_title {
+    padding: 16px;
+}
+.btn {
+    padding: 16px;
 }

@@ -30,7 +30,9 @@
 
         {% for ticket in tickets %}
             <div class="encadrement_post_critique">
-                <p>{{ticket.user }} a demandé une critique    {{ ticket.time_created }}</p>
+                <div class="publication_date">
+                    <p>{{ticket.user }} a demandé une critique</p><p> {{ ticket.time_created }}</p>
+                </div>
                 <p>{{ticket.title }}</p>
                 <p>{{ticket.description }}</p>
                 <img src="/media/{{ticket.image }}">
