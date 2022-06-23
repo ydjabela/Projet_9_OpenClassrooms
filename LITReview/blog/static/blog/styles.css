@@ -258,3 +258,8 @@ table {
 .btn {
     padding: 16px;
 }
+
+p
+{
+    word-wrap: break-word;
+}
