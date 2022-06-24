@@ -6,6 +6,7 @@ from django.db.models import CharField, Value
 from blog.models import Ticket, Review, UserFollows
 from blog.forms import AddTicketsForm, AddCritiqueForm, FollowForm
 from django.db import IntegrityError
+from itertools import chain
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -19,25 +20,34 @@ def home(request):
     reviews_list.append(reviews)
     tickets_list.append(tickets)
     list_users_followed = UserFollows.objects.filter(user=request.user)
-    print('============>0', reviews, reviews_list)
+    list_users_followers = UserFollows.objects.filter(followed_user_id=request.user)
 
     if list_users_followed is not None:
-        print('============>1', list_users_followed)
         for user_followed in list_users_followed:
-            print('============>2','userfllow trouve', user_followed.followed_user)
             reviews_users_followed = Review.objects.filter(user_id=user_followed.followed_user.id)
             tickets_users_followed = Ticket.objects.filter(user_id=user_followed.followed_user.id)
             if reviews_users_followed is not None:
-                print('============>3','reviews_users_followed not none', reviews_users_followed)
                 reviews_list.append(reviews_users_followed)
             if tickets_users_followed is not None:
                 tickets_list.append(tickets_users_followed)
-                print('============>4','tickets_users_followed not none')
-    print('============>5', reviews_list)
+    if list_users_followers is not None:
+        for user_followers in list_users_followers:
+            reviews_users_followers = Review.objects.filter(user_id=user_followers.user.id)
+            if reviews_users_followers is not None:
+                for review_user in reviews_users_followers:
+                    for ticket in tickets:
+                        if review_user.ticket.id == ticket.id:
+                            review_user = Review.objects.filter(
+                                ticket_id=review_user.ticket.id,
+                                user_id=user_followers.user.id
+                            )
+                            reviews_list.append(review_user)
+        # combine and sort the two types of posts
+
+
     context = {
         'reviews': reviews_list,
-        "tickets": tickets_list,
-        'list_users_followed': list_users_followed
+        "tickets": tickets_list
     }
 
     return render(request, 'blog/home.html', context=context)
@@ -88,7 +98,6 @@ def deleteticket(request, pk):
 
 @login_required
 def modifiepost(request, pk, id_post):
-    print(pk, id_post)
     post_to_modify = Review.objects.get(id=pk, user_id=request.user.id)
     tickets = Ticket.objects.get(id=id_post)
     if request.method == "GET":
