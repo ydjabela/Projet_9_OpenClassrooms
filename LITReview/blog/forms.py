@@ -1,7 +1,7 @@
 from django import forms
 from blog.models import Ticket, Review, UserFollows
 from django.forms import ModelForm
-from django.forms.widgets import TextInput
+from django.forms.widgets import TextInput, Textarea, RadioSelect
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -14,11 +14,18 @@ class AddTicketsForm(ModelForm):
             "description",
             "image"
             ]
-    title = forms.CharField(label='Titre')
-    description = forms.CharField(label='Description')
-    description.widget.attrs.update({'class': 'description_class'})
-    image = forms.ImageField(label='Image')
+        widgets = {
+            'title': TextInput(attrs={
+                "placeholder": "Titre du livre",
+                "class": "form-title"
+            }),
+            'description': Textarea(attrs={
+                "placeholder": "Description du ticket",
+                "class": "form-desc"}),
 
+        }
+
+    image = forms.ImageField(label='Image')
     def save(self, user_id, commit=True,):
         ticket = super(AddTicketsForm, self).save(commit=False)
         ticket.user_id = user_id
@@ -37,13 +44,27 @@ class AddCritiqueForm(ModelForm):
             "rating",
             "body"
             ]
+        widgets = {
+            'headline': TextInput(attrs={
+                "placeholder": "Titre",
+                "class": "form-title"
+            }),
+            'body': Textarea(attrs={
+                "placeholder": "Commentaire",
+                "class": "form-desc",
+            }),
+            'rating': RadioSelect(attrs={
+                "class": "rating_class",
+            }, choices=[("1", 1), ("2", 2), ("3", 3), ("4", 4), ("5", 5)]),
+        }
+        labels = {"headline": "Titre", "body": "Commentaire", "rating": "Note"}
 
-    headline = forms.CharField(label='Titre')
-    body = forms.CharField(label='Commentaire')
-    body.widget.attrs.update({'class': 'description_class'})
-    RATINGS = [("0", 0), ("1", 1), ("2", 2), ("3", 3), ("4", 4), ("5", 5)]
-    rating = forms.ChoiceField(label='Note', widget=forms.RadioSelect, choices=RATINGS)
-    rating.widget.attrs.update({'class': 'rating_class'})
+    #headline = forms.CharField(label='Titre')
+    #body = forms.CharField(label='Commentaire')
+    #body.widget.attrs.update({'class': 'description_class'})
+    #RATINGS = [("0", 0), ("1", 1), ("2", 2), ("3", 3), ("4", 4), ("5", 5)]
+    #rating = forms.ChoiceField(label='Note', widget=forms.RadioSelect, choices=RATINGS)
+    # rating.widget.attrs.update({'class': 'rating_class'})
 
     def save(self, user_id, ticket, commit=True,):
         review = super(AddCritiqueForm, self).save(commit=False)

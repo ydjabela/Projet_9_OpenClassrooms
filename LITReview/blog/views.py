@@ -12,11 +12,35 @@ from django.db import IntegrityError
 
 @login_required
 def home(request):
-    tickets = Ticket.objects.all()
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-    reviews = Review.objects.all()
-    reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
-    return render(request, 'blog/home.html', context={'tickets': tickets, 'reviews': reviews})
+    reviews_list = []
+    tickets_list = []
+    reviews = Review.objects.filter(user_id=request.user.id)
+    tickets = Ticket.objects.filter(user_id=request.user.id)
+    reviews_list.append(reviews)
+    tickets_list.append(tickets)
+    list_users_followed = UserFollows.objects.filter(user=request.user)
+    print('============>0', reviews, reviews_list)
+
+    if list_users_followed is not None:
+        print('============>1', list_users_followed)
+        for user_followed in list_users_followed:
+            print('============>2','userfllow trouve', user_followed.followed_user)
+            reviews_users_followed = Review.objects.filter(user_id=user_followed.followed_user.id)
+            tickets_users_followed = Ticket.objects.filter(user_id=user_followed.followed_user.id)
+            if reviews_users_followed is not None:
+                print('============>3','reviews_users_followed not none', reviews_users_followed)
+                reviews_list.append(reviews_users_followed)
+            if tickets_users_followed is not None:
+                tickets_list.append(tickets_users_followed)
+                print('============>4','tickets_users_followed not none')
+    print('============>5', reviews_list)
+    context = {
+        'reviews': reviews_list,
+        "tickets": tickets_list,
+        'list_users_followed': list_users_followed
+    }
+
+    return render(request, 'blog/home.html', context=context)
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
