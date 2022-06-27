@@ -14,6 +14,7 @@ from itertools import chain
 @login_required
 def home(request):
     reviews_list = []
+    reviews_users_followers_list = []
     tickets_list = []
     reviews = Review.objects.filter(user_id=request.user.id)
     tickets = Ticket.objects.filter(user_id=request.user.id)
@@ -35,15 +36,15 @@ def home(request):
             reviews_users_followers = Review.objects.filter(user_id=user_followers.user.id)
             if reviews_users_followers is not None:
                 for review_user in reviews_users_followers:
-                    for ticket in tickets:
-                        if review_user.ticket.id == ticket.id:
-                            review_user = Review.objects.filter(
-                                ticket_id=review_user.ticket.id,
-                                user_id=user_followers.user.id
-                            )
-                            reviews_list.append(review_user)
-        # combine and sort the two types of posts
+                    reviews_users_followers_list.append(review_user.ticket.id)
+                for ticket in tickets:
 
+                    if ticket.id in reviews_users_followers_list:
+                        review_user = Review.objects.filter(
+                            ticket_id=ticket.id,
+                            user_id=user_followers.user.id
+                        )
+                        reviews_list.append(review_user)
 
     context = {
         'reviews': reviews_list,
