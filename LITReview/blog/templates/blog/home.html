@@ -10,51 +10,47 @@
                 <button type="submit" class="btn btn-lg btn-success btn-block">Créer une critique</button>
             </form>
         </div>
-        {% for reviews_users in reviews %}
-            {% for review in reviews_users %}
+        {% for post in posts %}
+            {% if post.content_type == 'TICKET' %}
                 <div class="encadrement_post_critique">
                     <div class="publication_date">
-                        {% if review.user == request.user %}
-                            <p> Vous avez publié une critique</p>
+                        {% if post.user == request.user %}
+                            <p> Vous avez demandé une critique</p>
                         {% else %}
-                            <p> {{review.user}} à publié une critique</p>
+                            <p>{{post.user }} a demandé une critique</p>
                         {% endif %}
-                        <p> {{ review.time_created }}</p>
+                        <p> {{ post.time_created }}</p>
                     </div>
-                    <p>étoiles : {{ review.rating }}</p>
-                    <p> {{ review.body }}</p>
-                    <p>{{ review.headline }}</p>
-                    <div class="encadrement_post_critique">
-                        <p>Ticket - {{ review.ticket.user }}</p>
-                        <p>{{ review.ticket.title }}</p>
-                        <p>{{ review.ticket.description }}</p>
-                        <img src="/media/{{ review.ticket.image }}">
+                    <p>{{post.title }}</p>
+                    <p>{{post.description }}</p>
+                    <img src="/media/{{post.image }}">
+                    <div class="button-container">
+                        <a type="submit" class="default-button" href="{% url 'creatreview' post.id %}">Créer une critique</a>
                     </div>
                 </div>
                 <p></p>
-            {% endfor %}
-        {% endfor %}
-
-        {% for tickets_user in tickets %}
-            {% for ticket in tickets_user %}
+            {% elif post.content_type == 'REVIEW' %}
                 <div class="encadrement_post_critique">
                     <div class="publication_date">
-                        {% if ticket.user == request.user %}
-                            <p> Vous avez demandé une critique</p>
+                        {% if post.user == request.user %}
+                            <p> Vous avez publié une critique</p>
                         {% else %}
-                            <p>{{ticket.user }} a demandé une critique</p>
+                            <p> {{post.user}} à publié une critique</p>
                         {% endif %}
-                        <p> {{ ticket.time_created }}</p>
+                        <p> {{ post.time_created }}</p>
                     </div>
-                    <p>{{ticket.title }}</p>
-                    <p>{{ticket.description }}</p>
-                    <img src="/media/{{ticket.image }}">
-                    <div class="button-container">
-                        <a type="submit" class="default-button" href="{% url 'creatreview' ticket.id %}">Créer une critique</a>
+                    <p>étoiles : {{ post.rating }}</p>
+                    <p> {{ post.body }}</p>
+                    <p>{{ post.headline }}</p>
+                    <div class="encadrement_post_critique">
+                        <p>Ticket - {{ post.ticket.user }}</p>
+                        <p>{{ post.ticket.title }}</p>
+                        <p>{{ post.ticket.description }}</p>
+                        <img src="/media/{{ post.ticket.image }}">
                     </div>
                 </div>
-            <p></p>
-            {% endfor %}
+                <p></p>
+            {% endif %}
         {% endfor %}
     </section>
 </div>

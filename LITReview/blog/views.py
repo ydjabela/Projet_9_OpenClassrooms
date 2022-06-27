@@ -13,13 +13,11 @@ from itertools import chain
 
 @login_required
 def home(request):
-    reviews_list = []
     reviews_users_followers_list = []
-    tickets_list = []
+
     reviews = Review.objects.filter(user_id=request.user.id)
     tickets = Ticket.objects.filter(user_id=request.user.id)
-    reviews_list.append(reviews)
-    tickets_list.append(tickets)
+
     list_users_followed = UserFollows.objects.filter(user=request.user)
     list_users_followers = UserFollows.objects.filter(followed_user_id=request.user)
 
@@ -28,9 +26,9 @@ def home(request):
             reviews_users_followed = Review.objects.filter(user_id=user_followed.followed_user.id)
             tickets_users_followed = Ticket.objects.filter(user_id=user_followed.followed_user.id)
             if reviews_users_followed is not None:
-                reviews_list.append(reviews_users_followed)
+                reviews = (reviews | reviews_users_followed)
             if tickets_users_followed is not None:
-                tickets_list.append(tickets_users_followed)
+                tickets = (tickets | tickets_users_followed)
     if list_users_followers is not None:
         for user_followers in list_users_followers:
             reviews_users_followers = Review.objects.filter(user_id=user_followers.user.id)
@@ -38,17 +36,24 @@ def home(request):
                 for review_user in reviews_users_followers:
                     reviews_users_followers_list.append(review_user.ticket.id)
                 for ticket in tickets:
-
                     if ticket.id in reviews_users_followers_list:
                         review_user = Review.objects.filter(
                             ticket_id=ticket.id,
                             user_id=user_followers.user.id
                         )
-                        reviews_list.append(review_user)
+                        reviews = (reviews | review_user)
+    reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+    # returns queryset of tickets
+    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+    posts = sorted(
+        chain(reviews, tickets),
+        key=lambda post: post.time_created,
+        reverse=True
+    )
 
     context = {
-        'reviews': reviews_list,
-        "tickets": tickets_list
+        'posts': posts
     }
 
     return render(request, 'blog/home.html', context=context)
