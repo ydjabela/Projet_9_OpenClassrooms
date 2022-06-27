@@ -55,12 +55,12 @@ header
     align-items: flex-end;
 }
 
-
-#logo img
-{
+img{
+    height: 200px;
+}
+.logo_img{
     height: 80px;
 }
-
 header ul {
     font-family: Arial, Verdana;
     font-size: 14px;
@@ -102,7 +102,18 @@ header li:hover li a:hover {
     background: #d35400;
 }
 /*------------------------------------------------------------------------------------------------------------------- */
-
+table, th, td {
+  border: solid 1px #000;
+  padding: 10px;
+}
+table {
+    border-collapse:collapse;
+    caption-side:bottom;
+}
+p
+{
+    word-wrap: break-word;
+}
 .panel-title{
     text-align: center;
 }
@@ -186,10 +197,6 @@ form button[type="submit"]:hover {
     display:flex;
 }
 
-table, th, td {
-  border: solid 1px #000;
-  padding: 10px;
-}
 .userflowers_col {
     width: 78%;
     text-align: left;
@@ -198,16 +205,8 @@ table, th, td {
     width: 8.5%;
     text-align: left
 }
-img{
-    height: 200px;
-}
-.logo_img{
-    height: 80px;
-}
-table {
-    border-collapse:collapse;
-    caption-side:bottom;
-}
+
+
 .form-title {
     height:2rem;
     text-align: center;
@@ -225,6 +224,7 @@ table {
     padding: 5px;
     text-align:left;
 }
+
 .input_class{
     display: flex;
     width: 70%;
@@ -232,6 +232,7 @@ table {
     margin-left: 15px;
 
 }
+
 .input_class > p {
     display: flex;
     width: 70%;
@@ -239,6 +240,7 @@ table {
     flex-direction: column;
     margin-bottom:40px;
 }
+
 .input_class >div> p {
     display: flex;
     width: 65%;
@@ -255,32 +257,30 @@ table {
     justify-content: space-around;
     align-items: flex-start;
 }
+
 #id_title {
     padding: 16px;
 }
+
 .btn {
     padding: 16px;
 }
 
-p
-{
-    word-wrap: break-word;
-}
-.form-desc{
+.form-desc {
     width:145%;
     height:10rem;
 }
-.forms{
+.forms {
     display:flex;
     flex-direction:column;
     width:80%;
 }
 
-.form-text{
+.form-text {
     display:flex;
     margin: 10px;
 }
 
-.search_bar{
+.search_bar {
     display:flex
 }
