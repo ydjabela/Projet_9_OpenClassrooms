@@ -1,0 +1,20 @@
+<div class="encadrement_post_critique">
+    <div class="publication_date">
+        {% if post.user == request.user %}
+            <p> Vous avez publié une critique</p>
+        {% else %}
+            <p> {{post.user}} à publié une critique</p>
+        {% endif %}
+        <p> {{ post.time_created }}</p>
+    </div>
+    <p>étoiles : {{ post.rating }}</p>
+    <p> {{ post.body }}</p>
+    <p>{{ post.headline }}</p>
+    <div class="encadrement_post_critique">
+        <p>Ticket - {{ post.ticket.user }}</p>
+        <p>{{ post.ticket.title }}</p>
+        <p>{{ post.ticket.description }}</p>
+        <img src="/media/{{ post.ticket.image }}">
+    </div>
+</div>
+<p></p>
