@@ -29,6 +29,7 @@ def home(request):
                 reviews = (reviews | reviews_users_followed)
             if tickets_users_followed is not None:
                 tickets = (tickets | tickets_users_followed)
+
     if list_users_followers is not None:
         for user_followers in list_users_followers:
             reviews_users_followers = Review.objects.filter(user_id=user_followers.user.id)
@@ -51,12 +52,7 @@ def home(request):
         key=lambda post: post.time_created,
         reverse=True
     )
-
-    context = {
-        'posts': posts
-    }
-
-    return render(request, 'blog/home.html', context=context)
+    return render(request, 'blog/home.html', context={'posts': posts})
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -138,7 +134,7 @@ def modifieticket(request, pk):
             template_name="blog/modifieticket.html",
             context={"ticket_form": ticket_form})
     elif request.method == "POST":
-        ticket_form = AddTicketsForm(request.POST, request.FILES, initial={
+        ticket_form = AddTicketsForm(request.POST, request.FILES, instance={
             "id": post_to_modify.id,
             "title": post_to_modify.title,
             "description": post_to_modify.description,
