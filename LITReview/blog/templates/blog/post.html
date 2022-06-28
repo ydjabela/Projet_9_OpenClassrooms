@@ -8,7 +8,15 @@
                 <div class="publication_date">
                     <p>Vous avez publié une critique</p><p> {{ review.time_created }}</p>
                 </div>
-                <p>étoiles : {{ review.rating }}</p>
+                <p>étoiles :
+                    {% for star in stars %}
+                        {% if star <= review.rating %}
+                            <span class="fa fa-star checked"></span>
+                        {%else%}
+                            <span class="fa fa-star"></span>
+                        {%endif%}
+                    {% endfor %}
+                </p>
                 <p> {{ review.body }}</p>
                 <p>{{ review.headline }}</p>
                 <div class="encadrement_post_critique">

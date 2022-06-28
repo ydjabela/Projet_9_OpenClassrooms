@@ -23,7 +23,7 @@ class AddTicketsForm(ModelForm, ImageField):
                 "class": "form-desc"}),
         }
 
-    image = ImageField(label='Imcdfage')
+    image = ImageField(label='Imaage')
     def save(self, user_id, commit=True,):
         ticket = super(AddTicketsForm, self).save(commit=False)
         ticket.user_id = user_id

@@ -52,7 +52,7 @@ def home(request):
         key=lambda post: post.time_created,
         reverse=True
     )
-    return render(request, 'blog/home.html', context={'posts': posts})
+    return render(request, 'blog/home.html', context={'posts': posts, 'stars': range(1, 5+1)})
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -61,7 +61,7 @@ def home(request):
 def post(request):
     reviews = Review.objects.filter(user_id=request.user.id)
     tickets = Ticket.objects.filter(user_id=request.user.id)
-    return render(request, "blog/post.html", context={'reviews': reviews, 'tickets': tickets})
+    return render(request, "blog/post.html", context={'reviews': reviews, 'tickets': tickets, 'stars': range(1, 5+1)})
 
 # ---------------------------------------------------------------------------------------------------------------------#
 

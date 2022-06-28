@@ -283,3 +283,8 @@ form button[type="submit"]:hover {
 .search_bar {
     display:flex
 }
+
+
+.checked {
+  color: orange;
+}

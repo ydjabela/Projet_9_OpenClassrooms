@@ -7,7 +7,15 @@
         {% endif %}
         <p> {{ post.time_created }}</p>
     </div>
-    <p>étoiles : {{ post.rating }}</p>
+    <p>étoiles :
+    {% for star in stars %}
+        {% if star <= post.rating %}
+            <span class="fa fa-star checked"></span>
+        {%else%}
+            <span class="fa fa-star"></span>
+        {%endif%}
+    {% endfor %}
+    </p>
     <p> {{ post.body }}</p>
     <p>{{ post.headline }}</p>
     <div class="encadrement_post_critique">
