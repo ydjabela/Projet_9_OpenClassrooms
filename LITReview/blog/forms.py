@@ -1,5 +1,5 @@
 from blog.models import Ticket, Review, UserFollows
-from django.forms import ModelForm, ImageField, CharField
+from django.forms import ModelForm, ImageField, CharField, FileInput
 from django.forms.widgets import TextInput, Textarea, RadioSelect
 
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -20,10 +20,9 @@ class AddTicketsForm(ModelForm, ImageField):
             }),
             'description': Textarea(attrs={
                 "placeholder": "Description du ticket",
-                "class": "form-desc"}),
+                "class": "form-desc"})
         }
 
-    image = ImageField(label='Imaage')
     def save(self, user_id, commit=True,):
         ticket = super(AddTicketsForm, self).save(commit=False)
         ticket.user_id = user_id

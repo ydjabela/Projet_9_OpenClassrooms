@@ -65,6 +65,7 @@ def post(request):
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
+
 @login_required
 def creatreview(request, pk):
     ticket = Ticket.objects.get(id=pk)
@@ -98,6 +99,7 @@ def deleteticket(request, pk):
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
+
 @login_required
 def modifiepost(request, pk, id_post):
     post_to_modify = Review.objects.get(id=pk, user_id=request.user.id)
@@ -124,17 +126,20 @@ def modifiepost(request, pk, id_post):
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
+
 @login_required
 def modifieticket(request, pk):
     post_to_modify = Ticket.objects.get(id=pk)
+    tickets = Ticket.objects.filter(user_id=request.user.id, id=pk)
     if request.method == "GET":
+
         ticket_form = AddTicketsForm(instance=post_to_modify)
         return render(
             request=request,
             template_name="blog/modifieticket.html",
-            context={"ticket_form": ticket_form})
+            context={"ticket_form": ticket_form, "tickets": tickets})
     elif request.method == "POST":
-        ticket_form = AddTicketsForm(request.POST, request.FILES, instance={
+        ticket_form = AddTicketsForm(request.POST, request.FILES, initial={
             "id": post_to_modify.id,
             "title": post_to_modify.title,
             "description": post_to_modify.description,
