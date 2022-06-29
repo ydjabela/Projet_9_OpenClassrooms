@@ -3,7 +3,7 @@
 <div class="wrapper">
     <section class="login-container">
             <h2 class="panel-title">Ajouter  un ticket</h2>
-            <form class="input_class" action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data">
                 {{ ticket_form.as_p }}
                 {% csrf_token %}
                 <div class="button-container">

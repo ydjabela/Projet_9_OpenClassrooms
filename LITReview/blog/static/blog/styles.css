@@ -203,11 +203,11 @@ form button[type="submit"]:hover {
 }
 
 .userflowers_col {
-    width: 78%;
+    width: 100%;
     text-align: left;
 }
 .flowers_col {
-    width: 8.5%;
+    width: 1%;
     text-align: left
 }
 
