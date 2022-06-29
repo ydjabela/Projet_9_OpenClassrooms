@@ -1,5 +1,5 @@
-from blog.models import Ticket, Review, UserFollows
-from django.forms import ModelForm, ImageField, CharField, FileInput
+from blog.models import Ticket, Review
+from django.forms import ModelForm, ImageField
 from django.forms.widgets import TextInput, Textarea, RadioSelect
 from django import forms
 
