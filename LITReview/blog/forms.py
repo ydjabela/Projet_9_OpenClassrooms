@@ -1,6 +1,7 @@
 from blog.models import Ticket, Review, UserFollows
 from django.forms import ModelForm, ImageField, CharField, FileInput
 from django.forms.widgets import TextInput, Textarea, RadioSelect
+from django import forms
 
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -67,9 +68,7 @@ class AddCritiqueForm(ModelForm):
 # ---------------------------------------------------------------------------------------------------------------------#
 
 
-class FollowForm(CharField):
-    username = CharField(label="", widget=TextInput({"placeholder": "Username", "class": "form-title"}))
+class FollowForm(forms.Form):
+    username = forms.CharField(label="", widget=TextInput({"placeholder": "Username", "class": "form-title"}))
 
 # ---------------------------------------------------------------------------------------------------------------------#
-
-

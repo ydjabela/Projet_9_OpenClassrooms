@@ -123,7 +123,10 @@ p
 .panel-title{
     text-align: center;
 }
-
+.panel-input_username{
+    display: flex;
+    text-align: center;
+}
 .login-container {
     display: block;
     width: 75%;
