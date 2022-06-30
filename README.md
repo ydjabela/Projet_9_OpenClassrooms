@@ -39,13 +39,23 @@ pip install -r requirements.txt
 ```
 
 ### Fonctionnement:
+Une fois activé, pour démarrer le serveur local, il faudra utiliser la commande :
+```
+python manage.py runserver 
+```
+Accéder au site
+Il suffit d'entrer l'url du serveur local dans votre navigateur, dans mon cas http://127.0.0.1:8000/
+Un utilisateur devra pouvoir :
+- se connecter et s’inscrire – le site ne doit pas être accessible à un utilisateur non connecté 
+- consulter un flux contenant les derniers tickets et les commentaires des utilisateurs qu'il suit, classés par ordre chronologique, les plus récents en premier ; 
+- créer de nouveaux tickets pour demander une critique sur un livre/article ;
+- créer des critiques en réponse à des tickets ;
+- créer des critiques qui ne sont pas en réponse à un ticket. Dans le cadre d'un processus en une étape, l'utilisateur créera un ticket puis un commentaire en réponse à son propre ticket ;
+- voir, modifier et supprimer ses propres tickets et commentaires ; 
+- suivre les autres utilisateurs en entrant leur nom d'utilisateur ;
+- voir qui il suit et suivre qui il veut ; 
+- cesser de suivre un utilisateur
 
-
-### Mise en forme du code :
-Le code est mis en forme selon de modèle MVC.
-
-
-#### settings
 
 #### Cette commande sera obligatoire à chaque fois que vous voudrez travailler avec le cours. Dans le même terminal, tapez maintenant
 ```
